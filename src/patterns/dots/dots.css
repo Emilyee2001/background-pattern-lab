@@ -1,0 +1,14 @@
+/* 只寫規則，不寫數值：所有參數由 --bpl-dots-* token 提供 */
+@layer components {
+  .bpl-dots {
+    position: absolute;
+    inset: 0;
+    opacity: var(--bpl-dots-opacity);
+    background-image: radial-gradient(
+      circle,
+      var(--bpl-dots-color) calc(var(--bpl-dots-size) / 2),
+      transparent calc(var(--bpl-dots-size) / 2 + 0.5px)
+    );
+    background-size: var(--bpl-dots-gap) var(--bpl-dots-gap);
+  }
+}

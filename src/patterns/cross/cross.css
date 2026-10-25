@@ -1,0 +1,24 @@
+/*
+ * 方頭 +：穿過每格中心的橫線與直線（background），與每格中央 L×L 方塊（mask）取交集。
+ * 起點以 round() 對齊整數像素，避免 1px 線條落在半像素上變糊。
+ */
+@layer components {
+  .bpl-cross {
+    --_line-start: round(down, calc((var(--bpl-cross-gap) - var(--bpl-cross-thickness)) / 2), 1px);
+    --_line-end: calc(var(--_line-start) + var(--bpl-cross-thickness));
+    --_arm-start: round(down, calc((var(--bpl-cross-gap) - var(--bpl-cross-length)) / 2), 1px);
+    --_arm-end: calc(var(--_arm-start) + var(--bpl-cross-length));
+    position: absolute;
+    inset: 0;
+    opacity: var(--bpl-cross-opacity);
+    background-image:
+      linear-gradient(to bottom, transparent var(--_line-start), var(--bpl-cross-color) 0 var(--_line-end), transparent 0),
+      linear-gradient(to right, transparent var(--_line-start), var(--bpl-cross-color) 0 var(--_line-end), transparent 0);
+    background-size: var(--bpl-cross-gap) var(--bpl-cross-gap);
+    mask-image:
+      linear-gradient(to right, transparent var(--_arm-start), #000 0 var(--_arm-end), transparent 0),
+      linear-gradient(to bottom, transparent var(--_arm-start), #000 0 var(--_arm-end), transparent 0);
+    mask-size: var(--bpl-cross-gap) var(--bpl-cross-gap);
+    mask-composite: intersect;
+  }
+}

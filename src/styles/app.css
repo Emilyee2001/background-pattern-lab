@@ -1,0 +1,52 @@
+/* Tailwind 先載入以確定 cascade layer 順序；pattern CSS 由 src/patterns 之後引入 */
+@import "tailwindcss";
+
+/* 工具 UI token：全站外觀只從這裡調整 */
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --color-ink: #0F172A;
+  --color-ink-muted: #475569;
+  --color-ink-subtle: #64748B;
+  --color-accent: #4338CA;
+  --color-accent-soft: #E0E7FF;
+  --color-danger: #BE123C;
+  --color-danger-soft: #FFE4E6;
+  --color-glass: rgb(255 255 255 / 0.6);
+  --color-glass-field: rgb(255 255 255 / 0.7);
+  --color-glass-border: rgb(255 255 255 / 0.75);
+  --color-stage-neutral: #CBCCD3;
+  --color-code: rgb(15 23 42 / 0.88);
+  --color-checker: #E2E4E9;
+
+  --radius-panel: 1.75rem;
+  --radius-field: 0.75rem;
+
+  --container-panel: 30rem;
+  --container-phone: 390px;
+
+  --shadow-glass:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.85),
+    0 0 0 1px rgb(15 23 42 / 0.06),
+    0 24px 64px -16px rgb(15 23 42 / 0.4);
+  --shadow-phone:
+    0 0 0 1px rgb(15 23 42 / 0.08),
+    0 24px 64px -12px rgb(15 23 42 / 0.35);
+}
+
+/* 展示容器後方的棋盤格，讓透明效果可辨識 */
+@utility bg-checker {
+  background-color: #FFFFFF;
+  background-image: conic-gradient(var(--color-checker) 25%, transparent 0 50%, var(--color-checker) 0 75%, transparent 0);
+  background-size: 16px 16px;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  body {
+    @apply bg-stage-neutral font-sans text-ink antialiased;
+  }
+}

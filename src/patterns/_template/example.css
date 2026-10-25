@@ -1,0 +1,21 @@
+/*
+ * 新增 pattern 範本：複製整個 _template/ 為 <id>/，把檔名與內容中的 example 換成 <id>。
+ * 規則：
+ * - 包在 @layer components 內
+ * - class 為 .bpl-<id>，只使用 --bpl-<id>-* token，不寫死任何數值
+ * - 一個元素的背景畫完整個 pattern，不建立額外 DOM
+ */
+@layer components {
+  .bpl-example {
+    position: absolute;
+    inset: 0;
+    opacity: var(--bpl-example-opacity);
+    /* TODO: 用 --bpl-example-* token 畫出圖案 */
+    background-image: linear-gradient(
+      to bottom,
+      var(--bpl-example-color) var(--bpl-example-size),
+      transparent 0
+    );
+    background-size: 100% var(--bpl-example-gap);
+  }
+}

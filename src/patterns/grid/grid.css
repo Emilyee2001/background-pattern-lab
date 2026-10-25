@@ -1,0 +1,11 @@
+@layer components {
+  .bpl-grid {
+    position: absolute;
+    inset: 0;
+    opacity: var(--bpl-grid-opacity);
+    background-image:
+      linear-gradient(to right, var(--bpl-grid-color) var(--bpl-grid-thickness), transparent 0),
+      linear-gradient(to bottom, var(--bpl-grid-color) var(--bpl-grid-thickness), transparent 0);
+    background-size: var(--bpl-grid-gap) var(--bpl-grid-gap);
+  }
+}

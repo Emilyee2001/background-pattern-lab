@@ -1,0 +1,48 @@
+// @ts-check
+// Pattern 定義的 JSDoc 型別。此檔不輸出任何執行期程式碼。
+
+/**
+ * 一組欄位值。draft 時為字串，lastValid 時為數值（color 維持字串）。
+ * @typedef {Record<string, string | number>} PatternValues
+ */
+
+/**
+ * 欄位錯誤：key 為欄位 key，value 為錯誤訊息。
+ * @typedef {Record<string, string>} FieldErrors
+ */
+
+/**
+ * @typedef {object} NumberControl
+ * @property {string} key       英文識別名，同時用於 token 名稱
+ * @property {string} label     顯示名稱
+ * @property {string} [hint]    欄位說明
+ * @property {'number'} type
+ * @property {number} min
+ * @property {number} max
+ * @property {number} step
+ * @property {string} [unit]    顯示用單位（px、deg、%）
+ */
+
+/**
+ * @typedef {object} ColorControl
+ * @property {string} key
+ * @property {string} label
+ * @property {string} [hint]
+ * @property {'color'} type
+ */
+
+/** @typedef {NumberControl | ColorControl} PatternControl */
+
+/**
+ * @typedef {object} PatternDefinition
+ * @property {string} id                 英文識別名；class 為 `bpl-<id>`，token 為 `--bpl-<id>-<key>`
+ * @property {string} name               顯示名稱
+ * @property {string} componentName      匯出的 React component 名稱
+ * @property {Record<string, string | number>} defaults  所有欄位（含共通欄位 color、opacity）的預設值
+ * @property {PatternControl[]} controls 該 pattern 專屬欄位；共通欄位由 common-controls 補上
+ * @property {(values: Record<string, any>) => FieldErrors} [validate]  跨欄位規則，只在各欄位本身有效時呼叫
+ * @property {(values: Record<string, any>) => Record<string, string | number>} toTokens
+ * @property {string} css                pattern CSS 原始字串（`?raw`），匯出時使用
+ */
+
+export {}

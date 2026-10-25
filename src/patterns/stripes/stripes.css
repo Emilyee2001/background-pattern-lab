@@ -1,0 +1,12 @@
+@layer components {
+  .bpl-stripes {
+    position: absolute;
+    inset: 0;
+    opacity: var(--bpl-stripes-opacity);
+    background-image: repeating-linear-gradient(
+      var(--bpl-stripes-angle),
+      var(--bpl-stripes-color) 0 var(--bpl-stripes-thickness),
+      transparent 0 var(--bpl-stripes-gap)
+    );
+  }
+}
