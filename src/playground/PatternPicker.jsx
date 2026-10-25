@@ -1,4 +1,4 @@
-import { BASE_DEFAULTS } from '../patterns/_shared/index.js';
+import { BASE_DEFAULTS, baseToTokens } from '../patterns/_shared/index.js';
 import { BackgroundPreview } from './BackgroundPreview.jsx';
 
 // Pattern 清單：示意圖直接用該 pattern 的 CSS 與預設值繪製
@@ -18,7 +18,10 @@ export function PatternPicker({ patterns, selectedId, onSelect }) {
             }`}
           >
             <span className="relative isolate block aspect-square overflow-hidden rounded-lg ring-1 ring-ink/8">
-              <BackgroundPreview pattern={pattern} values={pattern.defaults} base={BASE_DEFAULTS} />
+              <BackgroundPreview
+                patternId={pattern.id}
+                style={{ ...baseToTokens(BASE_DEFAULTS), ...pattern.toTokens(pattern.defaults) }}
+              />
             </span>
             <span className={`text-xs ${selected ? 'font-semibold text-ink' : 'text-ink-muted group-hover:text-ink'}`}>
               {pattern.name}

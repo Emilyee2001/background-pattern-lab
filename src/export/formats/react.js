@@ -1,9 +1,10 @@
 // @ts-check
 // React 輸出格式：JSX 只負責 class 結構，所有繪製都在 CSS
+import { buildDefaultTokenCss, buildTokenCss } from '../token-css.js';
 
 /** @param {import('../build-export').ExportSnapshot} s */
 function toJsx(s) {
-  return `export function ${s.componentName}({ variant = '${s.variant}', className = '' }) {
+  return `export default function ${s.componentName}({ variant = '${s.variant}', className = '' }) {
   return (
     <div className={\`bpl-bg bpl-${s.patternId}--\${variant} \${className}\`.trim()} aria-hidden="true">
       <div className="bpl-bg__base" />
@@ -16,18 +17,7 @@ function toJsx(s) {
 
 /** @param {import('../build-export').ExportSnapshot} s */
 function toSharedCss(s) {
-  return `${s.sharedCss.map((css) => css.trim()).join('\n\n')}\n`;
-}
-
-/** @param {import('../build-export').ExportSnapshot} s */
-function toTokenCss(s) {
-  const lines = Object.entries(s.tokens).map(([name, value]) => `    ${name}: ${value};`);
-  return `@layer components {
-  .bpl-${s.patternId}--${s.variant} {
-${lines.join('\n')}
-  }
-}
-`;
+  return `${[...s.sharedCss, buildDefaultTokenCss(s)].map((css) => css.trim()).join('\n\n')}\n`;
 }
 
 export const reactFormat = {
@@ -37,6 +27,6 @@ export const reactFormat = {
   toCode: (snapshot) => ({
     jsx: toJsx(snapshot),
     sharedCss: toSharedCss(snapshot),
-    tokenCss: toTokenCss(snapshot),
+    tokenCss: buildTokenCss(snapshot),
   }),
 };

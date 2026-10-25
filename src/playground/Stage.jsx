@@ -1,20 +1,18 @@
-import { getPattern } from '../patterns/registry.js';
+import { useMemo } from 'react';
+import { buildExportSnapshot } from '../export/build-export.js';
+import { buildDefaultTokenCss, buildTokenCss } from '../export/token-css.js';
 import { BackgroundPreview } from './BackgroundPreview.jsx';
 
-// 展示區：本身就是「使用端容器」（relative + isolate），後方墊棋盤格
-export function Stage({ viewport, applied }) {
-  const pattern = getPattern(applied.patternId);
-  const narrow = viewport === 'narrow';
+// 展示區：本身就是「使用端容器」（relative + isolate），後方墊棋盤格。
+// Token 以匯出相同的 Token CSS 注入，RWD 斷點直接依視窗寬度生效。
+export function Stage({ applied }) {
+  const snapshot = useMemo(() => buildExportSnapshot(applied), [applied]);
+  const tokenCss = useMemo(() => buildDefaultTokenCss(snapshot) + buildTokenCss(snapshot), [snapshot]);
 
   return (
-    <div className="fixed inset-0 flex justify-center bg-stage-neutral">
-      <div
-        className={`relative isolate h-full bg-checker transition-[width] duration-300 ease-out ${
-          narrow ? 'w-phone max-w-full shadow-phone' : 'w-full'
-        }`}
-      >
-        <BackgroundPreview pattern={pattern} values={applied.pattern} base={applied.base} />
-      </div>
+    <div className="fixed inset-0 isolate bg-checker">
+      <style>{tokenCss}</style>
+      <BackgroundPreview patternId={snapshot.patternId} className={`bpl-${snapshot.patternId}--${snapshot.variant}`} />
     </div>
   );
 }

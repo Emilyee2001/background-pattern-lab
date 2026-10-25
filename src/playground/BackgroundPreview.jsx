@@ -1,12 +1,9 @@
-import { baseToTokens } from '../patterns/_shared/index.js';
-
-// 與匯出相同的兩層 DOM；token 以 inline style 設在根元素上
-export function BackgroundPreview({ pattern, values, base }) {
-  const tokens = { ...baseToTokens(base), ...pattern.toTokens(values) };
+// 與匯出相同的兩層 DOM；token 來自 className 對應的 CSS，或 inline style
+export function BackgroundPreview({ patternId, className = '', style }) {
   return (
-    <div className="bpl-bg" style={tokens} aria-hidden="true">
+    <div className={`bpl-bg ${className}`.trim()} style={style} aria-hidden="true">
       <div className="bpl-bg__base" />
-      <div className={`bpl-${pattern.id}`} />
+      <div className={`bpl-${patternId}`} />
     </div>
   );
 }

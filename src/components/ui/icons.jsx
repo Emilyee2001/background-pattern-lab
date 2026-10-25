@@ -55,16 +55,8 @@ export const EyeOffIcon = (p) => (
   </Icon>
 );
 
-export const MonitorIcon = (p) => (
+export const PlusIcon = (p) => (
   <Icon {...p}>
-    <rect x="2" y="3" width="20" height="14" rx="2" />
-    <path d="M8 21h8M12 17v4" />
-  </Icon>
-);
-
-export const PhoneIcon = (p) => (
-  <Icon {...p}>
-    <rect x="6" y="2" width="12" height="20" rx="2" />
-    <path d="M11 18h2" />
+    <path d="M12 5v14M5 12h14" />
   </Icon>
 );

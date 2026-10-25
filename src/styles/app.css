@@ -16,7 +16,6 @@
   --color-glass: rgb(255 255 255 / 0.6);
   --color-glass-field: rgb(255 255 255 / 0.7);
   --color-glass-border: rgb(255 255 255 / 0.75);
-  --color-stage-neutral: #CBCCD3;
   --color-code: rgb(15 23 42 / 0.88);
   --color-checker: #E2E4E9;
 
@@ -24,15 +23,12 @@
   --radius-field: 0.75rem;
 
   --container-panel: 30rem;
-  --container-phone: 390px;
+  --container-panel-sm: 22rem;
 
   --shadow-glass:
     inset 0 1px 0 0 rgb(255 255 255 / 0.85),
     0 0 0 1px rgb(15 23 42 / 0.06),
     0 24px 64px -16px rgb(15 23 42 / 0.4);
-  --shadow-phone:
-    0 0 0 1px rgb(15 23 42 / 0.08),
-    0 24px 64px -12px rgb(15 23 42 / 0.35);
 }
 
 /* 展示容器後方的棋盤格，讓透明效果可辨識 */
@@ -47,6 +43,6 @@
     color-scheme: light;
   }
   body {
-    @apply bg-stage-neutral font-sans text-ink antialiased;
+    @apply bg-white font-sans text-ink antialiased;
   }
 }

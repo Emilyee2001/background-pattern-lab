@@ -2,19 +2,25 @@ import { useEffect, useRef, useState } from 'react';
 import { Button } from '../components/ui/Button.jsx';
 import { GlassSurface } from '../components/ui/GlassSurface.jsx';
 import { EyeIcon } from '../components/ui/icons.jsx';
+import { BREAKPOINTS } from '../export/breakpoints.js';
 import { buildExportSnapshot } from '../export/build-export.js';
 import { reactFormat } from '../export/formats/react.js';
+import { BreakpointPanel } from '../playground/BreakpointPanel.jsx';
 import { ExportDialog } from '../playground/ExportDialog.jsx';
 import { Panel } from '../playground/Panel.jsx';
 import { Stage } from '../playground/Stage.jsx';
+import { useActiveLevel } from '../playground/useActiveLevel.js';
 import { usePlaygroundState } from '../playground/usePlaygroundState.js';
 
 export function App() {
   const state = usePlaygroundState();
-  const [viewport, setViewport] = useState('wide');
   const [panelHidden, setPanelHidden] = useState(false);
   const [exported, setExported] = useState(null);
   const [exportOpen, setExportOpen] = useState(false);
+
+  const levels = state.applied.breakpoints.map((bp) => bp.id);
+  const activeLevel = useActiveLevel(levels);
+  const nextBreakpoint = BREAKPOINTS.find((bp) => !levels.includes(bp.id));
 
   const exportButtonRef = useRef(null);
   const hideButtonRef = useRef(null);
@@ -45,7 +51,7 @@ export function App() {
 
   return (
     <>
-      <Stage viewport={viewport} applied={state.applied} />
+      <Stage applied={state.applied} />
 
       {panelHidden ? (
         <GlassSurface className="fixed right-4 bottom-4 rounded-2xl p-1.5">
@@ -55,17 +61,29 @@ export function App() {
           </Button>
         </GlassSurface>
       ) : (
-        <main className="pointer-events-none fixed inset-0 flex items-center justify-center p-4">
-          <div className="pointer-events-auto flex w-full max-w-panel justify-center">
-            <Panel
-              state={state}
-              viewport={viewport}
-              onViewportChange={setViewport}
-              onHide={() => togglePanel(true)}
-              onExport={openExport}
-              exportButtonRef={exportButtonRef}
-              hideButtonRef={hideButtonRef}
-            />
+        // 小於 xl 時 panel 往下排、整頁捲動；xl 以上往右排，各 panel 內部捲動
+        <main className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4">
+            <div className="flex w-full max-w-panel flex-col items-center gap-4 xl:w-auto xl:max-w-none xl:flex-row xl:items-start">
+              <Panel
+                state={state}
+                activeLevel={activeLevel}
+                onHide={() => togglePanel(true)}
+                onExport={openExport}
+                exportButtonRef={exportButtonRef}
+                hideButtonRef={hideButtonRef}
+              />
+              {levels.map((level, i) => (
+                <BreakpointPanel
+                  key={level}
+                  level={level}
+                  state={state}
+                  active={activeLevel === level}
+                  removable={i > 0}
+                  nextBreakpoint={i === levels.length - 1 ? nextBreakpoint : undefined}
+                />
+              ))}
+            </div>
           </div>
         </main>
       )}

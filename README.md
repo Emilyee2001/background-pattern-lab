@@ -39,7 +39,7 @@ src/
 2. 寫 `<id>.css`：包在 `@layer components` 內，class 為 `.bpl-<id>`，只使用 `--bpl-<id>-*` token，不寫死數值；刪掉範本註解。
 3. 寫 `index.js`：`id`、`name`、`componentName`、`defaults`、`controls`、`validate`、`toTokens`，import CSS 與 `?raw`。`color`、`opacity` 為共通欄位，不必列在 `controls`，但 `defaults` 與 `toTokens` 要包含。
 4. 在 `src/patterns/registry.js` 登記。
-5. 檢查：清單示意預覽、各欄位與跨欄位驗證、寬版／窄版、modal 輸出、貼到空白 React 專案後畫面一致。
+5. 檢查：清單示意預覽、各欄位與跨欄位驗證、RWD 斷點、modal 輸出、貼到空白 React 專案後畫面一致。
 
 不需要修改 Panel、Modal、匯出產生器或其他 pattern。
 
