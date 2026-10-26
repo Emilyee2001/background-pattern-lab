@@ -6,12 +6,18 @@ import { colorControl, opacityControl } from '../common-controls.js';
 
 export const baseCss = bplBgCss;
 
-export const baseControls = [colorControl, opacityControl];
+/** 底色透明度不接受 0%：要透明時改用「使用底色」開關 @type {import('../types').NumberControl} */
+const baseOpacityControl = { ...opacityControl, min: 1 };
+
+export const baseControls = [colorControl, baseOpacityControl];
 
 export const BASE_DEFAULTS = { color: '#FFFFFF', opacity: 100 };
 
-/** @param {{ color: string, opacity: number }} v */
-export const baseToTokens = (v) => ({
-  '--bpl-base-color': v.color,
-  '--bpl-base-opacity': v.opacity / 100,
-});
+/**
+ * 停用底色時輸出 transparent；DOM 與共用 CSS 不變，之後只改 token 就能加回底色
+ * @param {{ enabled?: boolean, color: string, opacity: number }} v
+ */
+export const baseToTokens = (v) =>
+  v.enabled === false
+    ? { '--bpl-base-color': 'transparent', '--bpl-base-opacity': 1 }
+    : { '--bpl-base-color': v.color, '--bpl-base-opacity': v.opacity / 100 };

@@ -4,7 +4,7 @@ import { BackgroundPreview } from './BackgroundPreview.jsx';
 // Pattern 清單：示意圖直接用該 pattern 的 CSS 與預設值繪製
 export function PatternPicker({ patterns, selectedId, onSelect }) {
   return (
-    <div role="group" aria-label="選擇圖案" className="grid grid-cols-4 gap-2">
+    <div role="group" aria-label="選擇圖案" className="grid grid-cols-4 gap-2.5">
       {patterns.map((pattern) => {
         const selected = pattern.id === selectedId;
         return (

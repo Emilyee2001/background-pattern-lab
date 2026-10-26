@@ -29,16 +29,8 @@ export function ExportDialog({ open, onClose, exported }) {
             </Button>
           </header>
 
-          <div className="relative flex min-h-0 flex-col gap-6 overflow-y-auto px-6 pb-6">
-            <CodeBlock id="export-jsx" title="JSX" description="Component 本體" code={exported.code.jsx} />
-            <CodeBlock
-              id="export-shared"
-              title="共用 CSS"
-              description="根元素、底色層、此 pattern 的規則與預設 token；每個專案貼一次即可"
-              code={exported.code.sharedCss}
-            />
-            <CodeBlock id="export-tokens" title="Token CSS" description="本次設定的數值；啟用 RWD 時含斷點的 media 區塊" code={exported.code.tokenCss} />
-
+          {/* 捲動區不延伸到底部圓角：用 mb 留出下方空間、mr 讓 scroll bar 離開右緣；py-0.5 保留邊緣 ring 與 focus outline 不被裁切 */}
+          <div className="relative mr-2 mb-6 flex min-h-0 flex-col gap-6 overflow-y-auto py-0.5 pr-4 pl-6">
             <section aria-labelledby="export-usage" className="rounded-field bg-white/60 p-4 ring-1 ring-ink/8">
               <h3 id="export-usage" className="text-sm font-semibold text-ink">
                 使用方式
@@ -71,6 +63,15 @@ export function ExportDialog({ open, onClose, exported }) {
                 </li>
               </ol>
             </section>
+
+            <CodeBlock id="export-jsx" title="JSX" description="Component 本體" code={exported.code.jsx} />
+            <CodeBlock
+              id="export-shared"
+              title="共用 CSS"
+              description="根元素、底色層、此 pattern 的規則與預設 token；每個專案貼一次即可"
+              code={exported.code.sharedCss}
+            />
+            <CodeBlock id="export-tokens" title="Token CSS" description="本次設定的數值；啟用 RWD 時含斷點的 media 區塊" code={exported.code.tokenCss} />
           </div>
         </GlassSurface>
       )}

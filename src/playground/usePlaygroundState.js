@@ -3,6 +3,7 @@
 //
 // Pattern 參數依 level 分組：'default' 為預設（最小尺寸），'md'／'lg' 為 RWD 斷點。
 // 每個 level 與底色各自是一個驗證組，互不阻擋。
+// 停用底色（baseEnabled = false）時保留底色的值，重新啟用即恢復。
 import { useMemo, useReducer } from 'react';
 import { BREAKPOINTS } from '../export/breakpoints.js';
 import { getPatternControls } from '../patterns/common-controls.js';
@@ -21,6 +22,7 @@ function createInitialState() {
       responsive: { enabled: false, breakpoints: /** @type {Level[]} */ ([]) },
       patterns: { [pattern.id]: { default: toDraft(pattern.defaults) } },
       base: toDraft(BASE_DEFAULTS),
+      baseEnabled: true,
     },
     lastValid: {
       patterns: Object.fromEntries(patterns.map((p) => [p.id, { default: { ...p.defaults } }])),
@@ -122,6 +124,8 @@ function reducer(state, action) {
       });
       return ensureLevels(next, state.draft.patternId);
     }
+    case 'toggleBase':
+      return { ...state, draft: { ...state.draft, baseEnabled: !state.draft.baseEnabled } };
     case 'addBreakpoint': {
       const { breakpoints } = state.draft.responsive;
       const nextBp = BREAKPOINTS.find((bp) => !breakpoints.includes(bp.id));
@@ -158,7 +162,7 @@ function reducer(state, action) {
 export function usePlaygroundState() {
   const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
   const { draft, lastValid } = state;
-  const { patternId, responsive } = draft;
+  const { patternId, responsive, baseEnabled } = draft;
 
   const pattern = getPattern(patternId);
   const patternDraft = draft.patterns[patternId];
@@ -171,7 +175,11 @@ export function usePlaygroundState() {
       ),
     [patternId, patternDraft],
   );
-  const baseErrors = useMemo(() => validateBaseDraft(draft.base).errors, [draft.base]);
+  // 停用底色時欄位無法編輯，不顯示錯誤
+  const baseErrors = useMemo(
+    () => (baseEnabled ? validateBaseDraft(draft.base).errors : {}),
+    [baseEnabled, draft.base],
+  );
 
   const applied = useMemo(
     () => ({
@@ -180,9 +188,9 @@ export function usePlaygroundState() {
       breakpoints: visibleLevels(responsive)
         .slice(1)
         .map((id) => ({ id, values: patternValid[id] })),
-      base: lastValid.base,
+      base: { enabled: baseEnabled, ...lastValid.base },
     }),
-    [patternId, patternValid, responsive, lastValid.base],
+    [patternId, patternValid, responsive, baseEnabled, lastValid.base],
   );
 
   const actions = useMemo(
@@ -193,6 +201,7 @@ export function usePlaygroundState() {
       /** @param {Target} target */
       normalizeColor: (target, key) => dispatch({ type: 'normalizeColor', target, key }),
       toggleResponsive: () => dispatch({ type: 'toggleResponsive' }),
+      toggleBase: () => dispatch({ type: 'toggleBase' }),
       addBreakpoint: () => dispatch({ type: 'addBreakpoint' }),
       /** @param {Level} id */
       removeBreakpoint: (id) => dispatch({ type: 'removeBreakpoint', id }),
@@ -207,6 +216,7 @@ export function usePlaygroundState() {
     patternErrors,
     responsive,
     baseDraft: draft.base,
+    baseEnabled,
     baseErrors,
     applied,
     actions,

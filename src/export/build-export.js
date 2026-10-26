@@ -27,7 +27,7 @@ function diffTokens(prev, next) {
  *   patternId: string,
  *   pattern: Record<string, any>,
  *   breakpoints: { id: string, values: Record<string, any> }[],
- *   base: { color: string, opacity: number },
+ *   base: { enabled: boolean, color: string, opacity: number },
  * }} applied
  * @returns {ExportSnapshot}
  */

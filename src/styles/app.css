@@ -15,15 +15,17 @@
   --color-danger-soft: #FFE4E6;
   --color-glass: rgb(255 255 255 / 0.6);
   --color-glass-field: rgb(255 255 255 / 0.7);
+  --color-field: #F8FAFC;
   --color-glass-border: rgb(255 255 255 / 0.75);
   --color-code: rgb(15 23 42 / 0.88);
   --color-checker: #E2E4E9;
 
-  --radius-panel: 1.75rem;
+  --radius-panel: 2rem;
+  --radius-card: 1rem;
   --radius-field: 0.75rem;
 
-  --container-panel: 30rem;
-  --container-panel-sm: 22rem;
+  --container-panel: 32rem;
+  --container-panel-sm: 24rem;
 
   --shadow-glass:
     inset 0 1px 0 0 rgb(255 255 255 / 0.85),
@@ -44,5 +46,9 @@
   }
   body {
     @apply bg-white font-sans text-ink antialiased;
+  }
+  /* Tailwind v4 預設按鈕游標為 default，統一改回 pointer */
+  button:not(:disabled) {
+    cursor: pointer;
   }
 }

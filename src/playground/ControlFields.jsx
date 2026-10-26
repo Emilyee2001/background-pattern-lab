@@ -6,9 +6,9 @@ function rangeText(control) {
 }
 
 // 由 controls 定義自動產生欄位；只負責顯示與回報輸入
-export function ControlFields({ idPrefix, controls, draft, applied, errors, onChange, onBlur }) {
+export function ControlFields({ idPrefix, controls, draft, applied, errors, onChange, onBlur, disabled = false }) {
   return (
-    <div className="grid grid-cols-2 gap-x-3 gap-y-4">
+    <div className="grid grid-cols-2 gap-x-4 gap-y-5">
       {controls.map((control) => {
         const id = `${idPrefix}-${control.key}`;
         const common = {
@@ -17,6 +17,7 @@ export function ControlFields({ idPrefix, controls, draft, applied, errors, onCh
           hint: control.hint,
           error: errors[control.key],
           value: draft[control.key],
+          disabled,
           onChange: (value) => onChange(control.key, value),
           onBlur: () => onBlur(control.key),
         };

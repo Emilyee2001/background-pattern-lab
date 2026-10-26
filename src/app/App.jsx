@@ -1,11 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { Button } from '../components/ui/Button.jsx';
-import { GlassSurface } from '../components/ui/GlassSurface.jsx';
-import { EyeIcon } from '../components/ui/icons.jsx';
-import { BREAKPOINTS } from '../export/breakpoints.js';
+import { useRef, useState } from 'react';
 import { buildExportSnapshot } from '../export/build-export.js';
 import { reactFormat } from '../export/formats/react.js';
-import { BreakpointPanel } from '../playground/BreakpointPanel.jsx';
 import { ExportDialog } from '../playground/ExportDialog.jsx';
 import { Panel } from '../playground/Panel.jsx';
 import { Stage } from '../playground/Stage.jsx';
@@ -18,25 +13,9 @@ export function App() {
   const [exported, setExported] = useState(null);
   const [exportOpen, setExportOpen] = useState(false);
 
-  const levels = state.applied.breakpoints.map((bp) => bp.id);
-  const activeLevel = useActiveLevel(levels);
-  const nextBreakpoint = BREAKPOINTS.find((bp) => !levels.includes(bp.id));
+  const activeLevel = useActiveLevel(state.applied.breakpoints.map((bp) => bp.id));
 
   const exportButtonRef = useRef(null);
-  const hideButtonRef = useRef(null);
-  const showButtonRef = useRef(null);
-  const panelToggled = useRef(false);
-
-  // 隱藏／顯示 panel 後，焦點移到對應的切換按鈕
-  useEffect(() => {
-    if (!panelToggled.current) return;
-    (panelHidden ? showButtonRef : hideButtonRef).current?.focus();
-  }, [panelHidden]);
-
-  function togglePanel(hidden) {
-    panelToggled.current = true;
-    setPanelHidden(hidden);
-  }
 
   function openExport() {
     const snapshot = buildExportSnapshot(state.applied);
@@ -53,40 +32,24 @@ export function App() {
     <>
       <Stage applied={state.applied} />
 
-      {panelHidden ? (
-        <GlassSurface className="fixed right-4 bottom-4 rounded-2xl p-1.5">
-          <Button ref={showButtonRef} variant="ghost" onClick={() => togglePanel(false)} className="relative">
-            <EyeIcon />
-            顯示 panel
-          </Button>
-        </GlassSurface>
-      ) : (
-        // 小於 xl 時 panel 往下排、整頁捲動；xl 以上往右排，各 panel 內部捲動
-        <main className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4">
-            <div className="flex w-full max-w-panel flex-col items-center gap-4 xl:w-auto xl:max-w-none xl:flex-row xl:items-start">
-              <Panel
-                state={state}
-                activeLevel={activeLevel}
-                onHide={() => togglePanel(true)}
-                onExport={openExport}
-                exportButtonRef={exportButtonRef}
-                hideButtonRef={hideButtonRef}
-              />
-              {levels.map((level, i) => (
-                <BreakpointPanel
-                  key={level}
-                  level={level}
-                  state={state}
-                  active={activeLevel === level}
-                  removable={i > 0}
-                  nextBreakpoint={i === levels.length - 1 ? nextBreakpoint : undefined}
-                />
-              ))}
-            </div>
-          </div>
-        </main>
-      )}
+      {/* 展開時置中，內容超出時整頁捲動，複製按鈕永遠在最下方；
+          收合時只剩標題 bar，貼齊畫面下方。收合後內容高度為 0，捲動位置自然回到頂部 */}
+      <main className="fixed inset-0 overflow-y-auto">
+        <div
+          className={`flex min-h-full justify-center px-4 ${
+            panelHidden ? 'items-end pb-[calc(1rem+env(safe-area-inset-bottom))]' : 'items-center pt-20 pb-8 xl:py-10'
+          }`}
+        >
+          <Panel
+            state={state}
+            activeLevel={activeLevel}
+            collapsed={panelHidden}
+            onToggleCollapsed={() => setPanelHidden((hidden) => !hidden)}
+            onExport={openExport}
+            exportButtonRef={exportButtonRef}
+          />
+        </div>
+      </main>
 
       <ExportDialog open={exportOpen} onClose={closeExport} exported={exported} />
     </>
