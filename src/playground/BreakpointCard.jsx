@@ -36,7 +36,7 @@ export function BreakpointCard({ level, state, active, removable, className = ''
         draft={patternDraft[level]}
         applied={patternValid[level]}
         errors={patternErrors[level]}
-        onChange={(key, value) => actions.setField(level, key, value)}
+        onChange={(values) => actions.setFields(level, values)}
         onBlur={(key) => actions.normalizeColor(level, key)}
       />
     </Card>

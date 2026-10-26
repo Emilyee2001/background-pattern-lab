@@ -2,7 +2,7 @@
 // 顏色、透明度等共通欄位。pattern 與底色共用同一份定義。
 
 /** @type {import('./types').ColorControl} */
-export const colorControl = { key: 'color', label: '顏色', type: 'color' };
+export const colorControl = { key: 'color', label: '顏色', type: 'color', alphaKey: 'opacity' };
 
 /** @type {import('./types').NumberControl} */
 export const opacityControl = {

@@ -85,7 +85,7 @@ export function Panel({ state, activeLevel, collapsed, onToggleCollapsed, onExpo
                 draft={patternDraft.default}
                 applied={patternValid.default}
                 errors={patternErrors.default}
-                onChange={(key, value) => actions.setField('default', key, value)}
+                onChange={(values) => actions.setFields('default', values)}
                 onBlur={(key) => actions.normalizeColor('default', key)}
               />
             </Card>
@@ -120,7 +120,7 @@ export function Panel({ state, activeLevel, collapsed, onToggleCollapsed, onExpo
                 draft={baseDraft}
                 applied={applied.base}
                 errors={baseErrors}
-                onChange={(key, value) => actions.setField('base', key, value)}
+                onChange={(values) => actions.setFields('base', values)}
                 onBlur={(key) => actions.normalizeColor('base', key)}
               />
             </Card>

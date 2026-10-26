@@ -29,6 +29,7 @@
  * @property {string} label
  * @property {string} [hint]
  * @property {'color'} type
+ * @property {string} [alphaKey]  同組的透明度欄位 key；設定後調色盤會顯示透明度滑桿並連動該欄位
  */
 
 /** @typedef {NumberControl | ColorControl} PatternControl */

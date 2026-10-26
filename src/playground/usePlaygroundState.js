@@ -106,9 +106,10 @@ function reducer(state, action) {
   switch (action.type) {
     case 'selectPattern':
       return ensureLevels({ ...state, draft: { ...state.draft, patternId: action.id } }, action.id);
-    case 'setField': {
+    // 一次更新同組的多個欄位（例如調色盤同時改顏色與透明度），避免中間出現不一致的值
+    case 'setFields': {
       const current = groupDraft(state, action.target);
-      return updateGroup(state, action.target, { ...current, [action.key]: action.value });
+      return updateGroup(state, action.target, { ...current, ...action.values });
     }
     case 'normalizeColor': {
       const current = groupDraft(state, action.target);
@@ -196,8 +197,8 @@ export function usePlaygroundState() {
   const actions = useMemo(
     () => ({
       selectPattern: (id) => dispatch({ type: 'selectPattern', id }),
-      /** @param {Target} target */
-      setField: (target, key, value) => dispatch({ type: 'setField', target, key, value }),
+      /** @param {Target} target @param {Record<string, string>} values */
+      setFields: (target, values) => dispatch({ type: 'setFields', target, values }),
       /** @param {Target} target */
       normalizeColor: (target, key) => dispatch({ type: 'normalizeColor', target, key }),
       toggleResponsive: () => dispatch({ type: 'toggleResponsive' }),
