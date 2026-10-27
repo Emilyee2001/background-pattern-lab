@@ -20,7 +20,7 @@ src/
 ├─ patterns/              # pattern 本體（CSS 是本體，與 playground UI 分離）
 │  ├─ _shared/            # .bpl-bg 根元素與底色層
 │  ├─ _template/          # 新增 pattern 用的範本（不登記）
-│  ├─ dots/ grid/ stripes/ cross/
+│  ├─ dots/ grid/ stripes/ cross/ cloud/
 │  ├─ common-controls.js  # 顏色、透明度共通欄位
 │  ├─ registry.js
 │  └─ types.js            # JSDoc 型別

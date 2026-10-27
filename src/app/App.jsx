@@ -37,7 +37,7 @@ export function App() {
       <main className="fixed inset-0 overflow-y-auto">
         <div
           className={`flex min-h-full justify-center px-4 ${
-            panelHidden ? 'items-end pb-[calc(1rem+env(safe-area-inset-bottom))]' : 'items-center pt-20 pb-8 xl:py-10'
+            panelHidden ? 'items-end pb-[calc(1rem+env(safe-area-inset-bottom))]' : 'items-center pt-20 pb-8'
           }`}
         >
           <Panel

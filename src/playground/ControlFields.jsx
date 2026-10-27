@@ -8,7 +8,7 @@ function rangeText(control) {
 // 由 controls 定義自動產生欄位；只負責顯示與回報輸入。onChange 回報 { 欄位 key: 原始字串 }
 export function ControlFields({ idPrefix, controls, draft, applied, errors, onChange, onBlur, disabled = false }) {
   return (
-    <div className="grid grid-cols-2 gap-x-4 gap-y-5">
+    <div className="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
       {controls.map((control) => {
         const id = `${idPrefix}-${control.key}`;
         const common = {

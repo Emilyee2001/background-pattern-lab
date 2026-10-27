@@ -35,6 +35,12 @@ export const CheckIcon = (p) => (
   </Icon>
 );
 
+export const ChevronDownIcon = (p) => (
+  <Icon {...p}>
+    <path d="m6 9 6 6 6-6" />
+  </Icon>
+);
+
 export const CloseIcon = (p) => (
   <Icon {...p}>
     <path d="M18 6 6 18M6 6l12 12" />

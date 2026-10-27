@@ -10,14 +10,13 @@ export function Card({ as: Tag = 'section', className = '', children, ...props }
   );
 }
 
-// 區塊標題列：左側標題（可附加內容），右側操作
+// 區塊標題列：左側標題（可附加內容），右側操作；寬度不足時右側操作換到下一行並靠右
 export function CardHeader({ title, extra, aside }) {
   return (
-    <div className="flex min-h-6 items-center gap-2">
+    <div className="flex min-h-6 flex-wrap items-center gap-2">
       {title && <h2 className="text-[11px] font-semibold tracking-[0.14em] text-ink-muted uppercase">{title}</h2>}
       {extra}
-      <span className="flex-1" />
-      {aside}
+      {aside && <div className="ml-auto flex items-center">{aside}</div>}
     </div>
   );
 }

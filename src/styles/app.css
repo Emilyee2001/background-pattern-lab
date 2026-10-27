@@ -24,8 +24,13 @@
   --radius-card: 1rem;
   --radius-field: 0.75rem;
 
-  --container-panel: 32rem;
-  --container-panel-sm: 24rem;
+  /* panel 外框內距 px-8、卡片內距 p-5；各尺寸固定寬度，不滿版，周圍保留背景可見：
+     panel-sm = 22rem → 卡片內容 15.5rem，Pattern 2 格、參數 1 欄；視窗容不下時由 max-w-full 縮小（320px 時為 18rem）
+     panel = 33.5rem → 卡片內容 27rem，可排 Pattern 4 格、參數 2 欄
+     panel-lg = 47.5rem → 卡片內容 41rem，Pattern 6 格、參數 3 欄，每格大小與 panel 幾乎相同 */
+  --container-panel-sm: 22rem;
+  --container-panel: 33.5rem;
+  --container-panel-lg: 47.5rem;
 
   --shadow-glass:
     inset 0 1px 0 0 rgb(255 255 255 / 0.85),
