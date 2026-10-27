@@ -1,14 +1,27 @@
-/* 只寫規則，不寫數值：所有參數由 --bpl-dots-* token 提供 */
+/*
+ * 點點：radial-gradient 畫一顆點，background-size 決定間距。所有參數由 --bpl-dots-* token 提供。
+ *
+ * - 同一顆點疊兩層：第一層畫奇數列，第二層畫偶數列，並往右錯開「錯開量 × 間距」。
+ *   兩層的磁磚都是「間距 × 兩倍列距」，各自只出現在自己那幾列。
+ * - 列距 = 間距 × √(1 − 錯開量²)，相鄰兩列最近的兩顆點距離恆等於間距：
+ *   錯開量 0 時列距等於間距（方格）；0.5 時列距約為間距 × 0.866（蜂巢，每顆點與周圍 6 顆等距）。
+ * - 磁磚置中，四邊留白才會對稱。
+ */
 @layer components {
   .bpl-dots {
-    position: absolute;
-    inset: 0;
-    opacity: var(--bpl-dots-opacity);
-    background-image: radial-gradient(
+    --_dot: radial-gradient(
       circle,
       var(--bpl-dots-color) calc(var(--bpl-dots-size) / 2),
       transparent calc(var(--bpl-dots-size) / 2 + 0.5px)
     );
-    background-size: var(--bpl-dots-gap) var(--bpl-dots-gap);
+    --_row: calc(var(--bpl-dots-gap) * sqrt(1 - var(--bpl-dots-stagger) * var(--bpl-dots-stagger)));
+    position: absolute;
+    inset: 0;
+    opacity: var(--bpl-dots-opacity);
+    background-image: var(--_dot), var(--_dot);
+    background-size: var(--bpl-dots-gap) calc(var(--_row) * 2);
+    background-position:
+      center,
+      calc(50% + var(--bpl-dots-gap) * var(--bpl-dots-stagger)) calc(50% + var(--_row));
   }
 }

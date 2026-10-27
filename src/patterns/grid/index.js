@@ -8,7 +8,8 @@ export const gridPattern = {
   id: 'grid',
   name: '網格',
   componentName: 'GridBackground',
-  defaults: { gap: 32, thickness: 1, ...COMMON_PATTERN_DEFAULTS },
+  defaults: { gap: 36, thickness: 1, ...COMMON_PATTERN_DEFAULTS },
+  previewValues: { gap: 32 },
   controls: [
     { key: 'gap', label: '格距', hint: '數值越小，圖案越密', type: 'number', min: 8, max: 120, step: 1, unit: 'px' },
     { key: 'thickness', label: '線寬', type: 'number', min: 1, max: 8, step: 1, unit: 'px' },

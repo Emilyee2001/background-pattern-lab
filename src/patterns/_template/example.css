@@ -4,6 +4,7 @@
  * - 包在 @layer components 內
  * - class 為 .bpl-<id>，只使用 --bpl-<id>-* token，不寫死任何數值
  * - 一個元素的背景畫完整個 pattern，不建立額外 DOM
+ * - 磁磚置中（background-position: center），四邊留白才會對稱
  */
 @layer components {
   .bpl-example {
@@ -17,5 +18,6 @@
       transparent 0
     );
     background-size: 100% var(--bpl-example-gap);
+    background-position: center;
   }
 }

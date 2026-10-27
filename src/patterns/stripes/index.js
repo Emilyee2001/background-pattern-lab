@@ -8,7 +8,8 @@ export const stripesPattern = {
   id: 'stripes',
   name: '條紋',
   componentName: 'StripesBackground',
-  defaults: { gap: 16, thickness: 2, angle: 45, ...COMMON_PATTERN_DEFAULTS },
+  defaults: { gap: 36, thickness: 1, angle: 135, ...COMMON_PATTERN_DEFAULTS },
+  previewValues: { gap: 28 },
   controls: [
     { key: 'gap', label: '週期', hint: '數值越小，圖案越密', type: 'number', min: 4, max: 80, step: 1, unit: 'px' },
     { key: 'thickness', label: '線寬', type: 'number', min: 1, max: 40, step: 1, unit: 'px' },

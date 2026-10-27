@@ -1,0 +1,55 @@
+/*
+ * SVG 雙色 pattern 範本：複製整個 _template-dual/ 為 <id>/，把檔名與內容中的 example 換成 <id>。
+ * 規則：
+ * - 包在 @layer components 內
+ * - class 為 .bpl-<id>，只使用 --bpl-<id>-* token
+ * - 兩種圖形各自一個顏色：圖形 A 畫在 ::before（color、opacity），圖形 B 畫在 ::after（secondary-color、secondary-opacity）
+ * - 根元素只負責縮放，本身不畫東西，也不設 opacity，兩層透明度才會各自獨立
+ * - SVG 的寫法同 _template-svg：不設 viewBox、畫在 24×24 內、% 與 # 寫成 %25、%23
+ *
+ * 排列：每層的 mask 為 2×2 格，同一個圖形疊兩層。第一列 A、B 輪流，第二列偏移半格：
+ *     A B A B
+ *      B A B A
+ */
+@layer components {
+  .bpl-example {
+    --_scale: tan(atan2(var(--bpl-example-size), 24px));
+    --_cell: calc(var(--bpl-example-gap) / var(--_scale));
+    /* 50%：磁磚置中，四邊留白才會對稱；再加 (格子 − 24px) ÷ 2，讓圖形落在格子中央 */
+    --_offset: calc(50% + (var(--_cell) - 24px) / 2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% / var(--_scale));
+    height: calc(100% / var(--_scale));
+    transform: scale(var(--_scale));
+    transform-origin: 0 0;
+  }
+  .bpl-example::before,
+  .bpl-example::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    mask-image: var(--_icon), var(--_icon);
+    mask-size: calc(var(--_cell) * 2) calc(var(--_cell) * 2);
+    mask-repeat: repeat;
+  }
+  .bpl-example::before {
+    /* TODO: 換成圖形 A。範例為實心四瓣 */
+    --_icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><path d='M6 6A6 6 0 0 1 18 6A6 6 0 0 1 18 18A6 6 0 0 1 6 18A6 6 0 0 1 6 6Z'/></svg>");
+    opacity: var(--bpl-example-opacity);
+    background-color: var(--bpl-example-color);
+    mask-position:
+      var(--_offset) var(--_offset),
+      calc(var(--_offset) + var(--_cell) * 1.5) calc(var(--_offset) + var(--_cell));
+  }
+  .bpl-example::after {
+    /* TODO: 換成圖形 B。範例為圓角四角星（線條描邊把尖角修圓） */
+    --_icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><path stroke='%23000' stroke-width='2' stroke-linejoin='round' d='M12 2A14 14 0 0 0 22 12A14 14 0 0 0 12 22A14 14 0 0 0 2 12A14 14 0 0 0 12 2Z'/></svg>");
+    opacity: var(--bpl-example-secondary-opacity);
+    background-color: var(--bpl-example-secondary-color);
+    mask-position:
+      calc(var(--_offset) + var(--_cell)) var(--_offset),
+      calc(var(--_offset) + var(--_cell) / 2) calc(var(--_offset) + var(--_cell));
+  }
+}

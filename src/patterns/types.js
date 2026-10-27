@@ -40,7 +40,9 @@
  * @property {string} name               顯示名稱
  * @property {string} componentName      匯出的 React component 名稱
  * @property {Record<string, string | number>} defaults  所有欄位（含共通欄位 color、opacity）的預設值
+ * @property {Record<string, string | number>} [previewValues]  只給 Pattern 清單示意圖用，覆寫 defaults 中的部分欄位
  * @property {PatternControl[]} controls 該 pattern 專屬欄位；共通欄位由 common-controls 補上
+ * @property {PatternControl[]} [colorControls]  顏色欄位；省略時使用共通的 color、opacity（雙色見 createDualColorControls）
  * @property {(values: Record<string, any>) => FieldErrors} [validate]  跨欄位規則，只在各欄位本身有效時呼叫
  * @property {(values: Record<string, any>) => Record<string, string | number>} toTokens
  * @property {string} css                pattern CSS 原始字串（`?raw`），匯出時使用

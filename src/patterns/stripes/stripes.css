@@ -1,12 +1,30 @@
+/*
+ * 斜線反鋸齒：漸層的硬邊（同一位置換色）不會反鋸齒，每個像素只有「在線上／不在線上」兩種結果。
+ * 斜角時每條線落在像素格上的位置都不同，細線會一條粗一條細。
+ * 所以線條兩側各留一段寬 --_aa 的漸變，--_aa 為一個裝置像素，coverage 總量仍等於線寬。
+ * 漸變的兩端都落在像素中心上，0、90 度等水平／垂直線仍然清晰，不會變糊。
+ */
 @layer components {
   .bpl-stripes {
+    --_aa: 1px;
     position: absolute;
     inset: 0;
     opacity: var(--bpl-stripes-opacity);
     background-image: repeating-linear-gradient(
       var(--bpl-stripes-angle),
-      var(--bpl-stripes-color) 0 var(--bpl-stripes-thickness),
-      transparent 0 var(--bpl-stripes-gap)
+      transparent 0 calc(var(--_aa) / 2),
+      var(--bpl-stripes-color) calc(var(--_aa) * 1.5) calc(var(--bpl-stripes-thickness) + var(--_aa) / 2),
+      transparent calc(var(--bpl-stripes-thickness) + var(--_aa) * 1.5) var(--bpl-stripes-gap)
     );
+  }
+  @media (min-resolution: 2dppx) {
+    .bpl-stripes {
+      --_aa: 0.5px;
+    }
+  }
+  @media (min-resolution: 3dppx) {
+    .bpl-stripes {
+      --_aa: calc(1px / 3);
+    }
   }
 }

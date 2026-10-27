@@ -8,10 +8,12 @@ export const dotsPattern = {
   id: 'dots',
   name: '點點',
   componentName: 'DotsBackground',
-  defaults: { gap: 24, size: 2, ...COMMON_PATTERN_DEFAULTS },
+  defaults: { gap: 32, size: 2, stagger: 0, ...COMMON_PATTERN_DEFAULTS },
+  previewValues: { gap: 24 },
   controls: [
     { key: 'gap', label: '間距', hint: '數值越小，圖案越密', type: 'number', min: 8, max: 80, step: 1, unit: 'px' },
     { key: 'size', label: '直徑', type: 'number', min: 1, max: 24, step: 1, unit: 'px' },
+    { key: 'stagger', label: '錯開', hint: '0 為方格排列，50 為蜂巢排列', type: 'number', min: 0, max: 50, step: 1, unit: '%' },
   ],
   validate: (v) => (v.size >= v.gap ? { size: '直徑需小於間距' } : {}),
   toTokens: (v) => ({
@@ -19,6 +21,8 @@ export const dotsPattern = {
     '--bpl-dots-opacity': v.opacity / 100,
     '--bpl-dots-gap': `${v.gap}px`,
     '--bpl-dots-size': `${v.size}px`,
+    // 錯開量以間距為單位：0～0.5
+    '--bpl-dots-stagger': v.stagger / 100,
   }),
   css: dotsCss,
 };

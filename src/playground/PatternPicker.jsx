@@ -20,7 +20,7 @@ function getCollapsedPatterns(patterns, selectedId, count) {
   return [...firstRow.slice(0, -1), patterns.find((p) => p.id === selectedId)];
 }
 
-// Pattern 清單：示意圖直接用該 pattern 的 CSS 與預設值繪製。超過一列時可收合
+// Pattern 清單：示意圖直接用該 pattern 的 CSS 與預設值（可由 previewValues 覆寫）繪製。超過一列時可收合
 export function PatternPicker({ patterns, selectedId, onSelect }) {
   const [expanded, setExpanded] = useState(false);
   const columns = useColumnCount();
@@ -63,7 +63,7 @@ export function PatternPicker({ patterns, selectedId, onSelect }) {
               <span className="relative isolate block aspect-square overflow-hidden rounded-lg ring-1 ring-ink/8">
                 <BackgroundPreview
                   patternId={pattern.id}
-                  style={{ ...baseToTokens(BASE_DEFAULTS), ...pattern.toTokens(pattern.defaults) }}
+                  style={{ ...baseToTokens(BASE_DEFAULTS), ...pattern.toTokens({ ...pattern.defaults, ...pattern.previewValues }) }}
                 />
               </span>
               <span className={`text-xs ${selected ? 'font-semibold text-ink' : 'text-ink-muted group-hover:text-ink'}`}>

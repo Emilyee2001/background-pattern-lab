@@ -1,0 +1,44 @@
+/*
+ * SVG 單色 pattern 範本：複製整個 _template-svg/ 為 <id>/，把檔名與內容中的 example 換成 <id>。
+ * 規則：
+ * - 包在 @layer components 內
+ * - class 為 .bpl-<id>，只使用 --bpl-<id>-* token
+ * - SVG 以 data URI 作為 mask，只提供形狀；顏色由 background-color 決定，所以顏色仍是 token
+ * - data URI 內不能用 var()：形狀、角度、線寬都寫死在 SVG 裡。% 與 # 要寫成 %25、%23
+ * - SVG 不設 viewBox，1 單位 = 1px，圖形畫在 24×24 內。細節用挖空表現（fill-rule='evenodd'），不用第二個顏色
+ * - 線條造型用 fill='none' stroke='%23000' stroke-width='1.5'，線寬會跟著大小等比縮放
+ *
+ * 大小：整層用 transform 等比縮放，倍率 = size ÷ 24px。calc() 不能用長度除以長度，
+ * 改用 tan(atan2(a, b)) 取得 a ÷ b 的無單位數字。格子與元素寬高先除以倍率，縮放後間距剛好等於 gap。
+ *
+ * 排列變化：
+ * - 交錯：mask-image 疊兩次 var(--_icon)，mask-size 改為 1×2 格，
+ *   第二層的 mask-position 往右半格、往下一格。
+ * - 不規則（大磁磚）：一張 SVG 涵蓋 4×4 格，mask-size 改為 4 格、mask-position 改為 center。
+ *   圖形放在 <defs>，以原點為中心、畫在半徑 12 的圓內（旋轉後才不會超出格子）；
+ *   每格寫一個 <svg x='12.5%25' y='12.5%25' overflow='visible'><use href='%23a' transform='rotate(30)'/></svg>，
+ *   x、y 為格子中心（12.5%、37.5%、62.5%、87.5%，以 mask-size 為準），角度寫死。
+ */
+@layer components {
+  .bpl-example {
+    /* TODO: 換成自己的圖形（畫在 24×24 內）。範例為實心四瓣 */
+    --_icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><path d='M6 6A6 6 0 0 1 18 6A6 6 0 0 1 18 18A6 6 0 0 1 6 18A6 6 0 0 1 6 6Z'/></svg>");
+    --_scale: tan(atan2(var(--bpl-example-size), 24px));
+    --_cell: calc(var(--bpl-example-gap) / var(--_scale));
+    /* 50%：磁磚置中，四邊留白才會對稱；再加 (格子 − 24px) ÷ 2，讓圖形落在格子中央 */
+    --_offset: calc(50% + (var(--_cell) - 24px) / 2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% / var(--_scale));
+    height: calc(100% / var(--_scale));
+    transform: scale(var(--_scale));
+    transform-origin: 0 0;
+    opacity: var(--bpl-example-opacity);
+    background-color: var(--bpl-example-color);
+    mask-image: var(--_icon);
+    mask-size: var(--_cell) var(--_cell);
+    mask-position: var(--_offset) var(--_offset);
+    mask-repeat: repeat;
+  }
+}
