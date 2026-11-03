@@ -3,9 +3,10 @@
 import { dotsPattern } from './dots/index.js';
 import { gridPattern } from './grid/index.js';
 import { stripesPattern } from './stripes/index.js';
+import { crossPattern } from './cross/index.js';
 
 /** @type {import('./types').PatternDefinition[]} */
-export const patterns = [dotsPattern, gridPattern, stripesPattern];
+export const patterns = [dotsPattern, gridPattern, stripesPattern, crossPattern];
 
 export const DEFAULT_PATTERN_ID = 'dots';
 

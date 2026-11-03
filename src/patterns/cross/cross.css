@@ -1,0 +1,56 @@
+/*
+ * 十字線：水平線畫在 ::before、垂直線畫在 ::after，兩條線交會在中心點。
+ * - 等粗：每條線是一層 linear-gradient，色帶置中在漸層線的 50%，也就是元素中心。
+ *   元素寬高為容器的 200%，再移到中心對齊中心點，所以中心點在容器內任何位置，線都能延伸到四邊。
+ * - 旋轉：直接改漸層角度，不用 transform，無限延伸的線轉到任何角度都蓋得到容器四角。
+ * - 長度：用圓形 mask 從中心裁切，半徑 = 長度 ÷ 2。長度 0 時半徑改為 100%（蓋滿整個元素），即無限延伸。
+ *   判斷長度是否為 0：tan(atan2(長度, 1px)) 取得無單位數字，clamp 到 0～1，長度 ≥ 1px 時為 1。
+ * - 反鋸齒：做法同 stripes，線條兩側與 mask 邊緣各留一段寬 --_aa 的漸變。
+ */
+@layer components {
+  .bpl-cross {
+    --_aa: 1px;
+    --_half: calc(var(--bpl-cross-thickness) / 2);
+    --_line:
+      transparent calc(50% - var(--_half) - var(--_aa) / 2),
+      var(--bpl-cross-color) calc(50% - var(--_half) + var(--_aa) / 2) calc(50% + var(--_half) - var(--_aa) / 2),
+      transparent calc(50% + var(--_half) + var(--_aa) / 2);
+    position: absolute;
+    top: calc(var(--bpl-cross-center-y) - 100%);
+    left: calc(var(--bpl-cross-center-x) - 100%);
+    width: 200%;
+    height: 200%;
+    opacity: var(--bpl-cross-opacity);
+  }
+  .bpl-cross::before,
+  .bpl-cross::after {
+    --_radius: calc(var(--_length) / 2 + (1 - clamp(0, tan(atan2(var(--_length), 1px)), 1)) * 100%);
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(var(--_angle), var(--_line));
+    mask-image: radial-gradient(
+      circle,
+      #000 calc(var(--_radius) - var(--_aa) / 2),
+      transparent calc(var(--_radius) + var(--_aa) / 2)
+    );
+  }
+  .bpl-cross::before {
+    --_length: var(--bpl-cross-horizontal-length);
+    --_angle: var(--bpl-cross-angle);
+  }
+  .bpl-cross::after {
+    --_length: var(--bpl-cross-vertical-length);
+    --_angle: calc(var(--bpl-cross-angle) + 90deg);
+  }
+  @media (min-resolution: 2dppx) {
+    .bpl-cross {
+      --_aa: 0.5px;
+    }
+  }
+  @media (min-resolution: 3dppx) {
+    .bpl-cross {
+      --_aa: calc(1px / 3);
+    }
+  }
+}
