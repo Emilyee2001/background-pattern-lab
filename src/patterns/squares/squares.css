@@ -1,0 +1,29 @@
+/*
+ * 方點：conic-gradient 以（邊長, 邊長）為中心只塗左上象限，在磁磚左上角畫出一個方點，background-size 決定間距。
+ * 所有參數由 --bpl-squares-* token 提供。排列方式同點點。
+ *
+ * - 同一個方點疊兩層：第一層畫奇數列，第二層畫偶數列，並往右錯開「錯開量 × 間距」。
+ *   兩層的磁磚都是「間距 × 兩倍間距」，各自只出現在自己那幾列。
+ * - 列距固定等於間距，不隨錯開量改變。
+ * - 方點畫在磁磚左上角，再位移讓第一層的方點落在元素正中央，四邊留白才會對稱。
+ */
+@layer components {
+  .bpl-squares {
+    --_square: conic-gradient(
+      at var(--bpl-squares-size) var(--bpl-squares-size),
+      transparent 75%,
+      var(--bpl-squares-color) 0
+    );
+    /* 50%：磁磚置中 */
+    --_x: calc(50% + (var(--bpl-squares-gap) - var(--bpl-squares-size)) / 2);
+    --_y: calc(50% + var(--bpl-squares-gap) - var(--bpl-squares-size) / 2);
+    position: absolute;
+    inset: 0;
+    opacity: var(--bpl-squares-opacity);
+    background-image: var(--_square), var(--_square);
+    background-size: var(--bpl-squares-gap) calc(var(--bpl-squares-gap) * 2);
+    background-position:
+      var(--_x) var(--_y),
+      calc(var(--_x) + var(--bpl-squares-gap) * var(--bpl-squares-stagger)) calc(var(--_y) + var(--bpl-squares-gap));
+  }
+}

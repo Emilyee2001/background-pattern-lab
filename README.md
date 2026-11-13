@@ -22,7 +22,7 @@ src/
 │  ├─ _template/          # 新增 pattern 用的範本（不登記）：CSS 漸層
 │  ├─ _template-svg/      # 範本：SVG mask、單色
 │  ├─ _template-dual/     # 範本：SVG mask、雙色
-│  ├─ dots/ grid/ stripes/ cross/
+│  ├─ dots/ grid/ dashed-grid/ stripes/ double-stripes/ cross/ squares/ pixel-cross/
 │  ├─ common-controls.js  # 顏色、透明度共通欄位與雙色欄位
 │  ├─ registry.js
 │  └─ types.js            # JSDoc 型別

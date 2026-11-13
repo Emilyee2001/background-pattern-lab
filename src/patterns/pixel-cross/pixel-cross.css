@@ -1,0 +1,45 @@
+/*
+ * 格子十字：3×3 格中，上下左右 4 格畫成十字（::before），中心格另外上色（::after）。SVG mask，做法同 _template-dual。
+ * - 圖形畫在 24×24 內，每格 8px。寬度以 3px 為單位，縮放後每格都是整數 px，方塊邊緣才會清晰，兩層也不會有接縫。
+ * - 錯開：同一個圖形疊兩層，磁磚為「間距 × 兩倍間距」，第二層往右「錯開量 × 間距」、往下一個間距。
+ *   列距固定等於間距，不隨錯開量改變。
+ * - 兩層的 mask-size、mask-position 相同，只有圖形不同，十字與中心格才會對齊。
+ */
+@layer components {
+  .bpl-pixel-cross {
+    --_scale: tan(atan2(var(--bpl-pixel-cross-size), 24px));
+    --_cell: calc(var(--bpl-pixel-cross-gap) / var(--_scale));
+    /* 50%：磁磚置中；圖形畫在磁磚左上角，再位移讓第一層的圖形落在元素正中央，四邊留白才會對稱 */
+    --_x: calc(50% + (var(--_cell) - 24px) / 2);
+    --_y: calc(50% + var(--_cell) - 12px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% / var(--_scale));
+    height: calc(100% / var(--_scale));
+    transform: scale(var(--_scale));
+    transform-origin: 0 0;
+  }
+  .bpl-pixel-cross::before,
+  .bpl-pixel-cross::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    mask-image: var(--_icon), var(--_icon);
+    mask-size: var(--_cell) calc(var(--_cell) * 2);
+    mask-position:
+      var(--_x) var(--_y),
+      calc(var(--_x) + var(--_cell) * var(--bpl-pixel-cross-stagger)) calc(var(--_y) + var(--_cell));
+    mask-repeat: repeat;
+  }
+  .bpl-pixel-cross::before {
+    --_icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><path d='M8 0h8v8H8zM0 8h8v8H0zM16 8h8v8h-8zM8 16h8v8H8z'/></svg>");
+    opacity: var(--bpl-pixel-cross-opacity);
+    background-color: var(--bpl-pixel-cross-color);
+  }
+  .bpl-pixel-cross::after {
+    --_icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><path d='M8 8h8v8H8z'/></svg>");
+    opacity: var(--bpl-pixel-cross-secondary-opacity);
+    background-color: var(--bpl-pixel-cross-secondary-color);
+  }
+}

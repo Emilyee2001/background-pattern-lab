@@ -1,0 +1,31 @@
+/*
+ * 雙線條紋：每個週期內畫兩條同寬的線，線距固定等於線寬，整組寬度為線寬 × 3。
+ * 反鋸齒做法同 stripes：每條線兩側各留一段寬 --_aa 的漸變。
+ */
+@layer components {
+  .bpl-double-stripes {
+    --_aa: 1px;
+    --_t: var(--bpl-double-stripes-thickness);
+    position: absolute;
+    inset: 0;
+    opacity: var(--bpl-double-stripes-opacity);
+    background-image: repeating-linear-gradient(
+      var(--bpl-double-stripes-angle),
+      transparent 0 calc(var(--_aa) / 2),
+      var(--bpl-double-stripes-color) calc(var(--_aa) * 1.5) calc(var(--_t) + var(--_aa) / 2),
+      transparent calc(var(--_t) + var(--_aa) * 1.5) calc(var(--_t) * 2 + var(--_aa) / 2),
+      var(--bpl-double-stripes-color) calc(var(--_t) * 2 + var(--_aa) * 1.5) calc(var(--_t) * 3 + var(--_aa) / 2),
+      transparent calc(var(--_t) * 3 + var(--_aa) * 1.5) var(--bpl-double-stripes-gap)
+    );
+  }
+  @media (min-resolution: 2dppx) {
+    .bpl-double-stripes {
+      --_aa: 0.5px;
+    }
+  }
+  @media (min-resolution: 3dppx) {
+    .bpl-double-stripes {
+      --_aa: calc(1px / 3);
+    }
+  }
+}

@@ -1,0 +1,37 @@
+/*
+ * 虛線網格：水平線畫在 ::before、垂直線畫在 ::after，各自用 mask 把線切成虛線。
+ * - 線條做法同 grid：磁磚置中，線條從中央往外排。
+ * - 虛線週期 = 格距 ÷ 段數，所以每格都切成整數段，交叉點一定對齊。虛線與空白比例寫死 1:1。
+ * - 虛線段置中在交叉點上，每個格子角都是一個小「+」：mask 磁磚的色段畫在磁磚中央，
+ *   再位移 (線寬 − 格距) ÷ 2，讓磁磚中央對齊線條中心。
+ * - 兩個偽元素只差方向，磁磚大小與位移共用；mask 的漸層只沿一個方向變化，另一軸的位置不影響結果。
+ */
+@layer components {
+  .bpl-dashed-grid {
+    --_period: calc(var(--bpl-dashed-grid-gap) / var(--bpl-dashed-grid-dashes));
+    --_offset: calc(50% + (var(--bpl-dashed-grid-thickness) - var(--bpl-dashed-grid-gap)) / 2);
+    position: absolute;
+    inset: 0;
+    opacity: var(--bpl-dashed-grid-opacity);
+  }
+  .bpl-dashed-grid::before,
+  .bpl-dashed-grid::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(var(--_line), var(--bpl-dashed-grid-color) var(--bpl-dashed-grid-thickness), transparent 0);
+    background-size: var(--bpl-dashed-grid-gap) var(--bpl-dashed-grid-gap);
+    background-position: center;
+    mask-image: linear-gradient(var(--_dash), transparent 25%, #000 0 75%, transparent 0);
+    mask-size: var(--_period) var(--_period);
+    mask-position: var(--_offset) var(--_offset);
+  }
+  .bpl-dashed-grid::before {
+    --_line: to bottom;
+    --_dash: to right;
+  }
+  .bpl-dashed-grid::after {
+    --_line: to right;
+    --_dash: to bottom;
+  }
+}
