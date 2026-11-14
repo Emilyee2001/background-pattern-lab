@@ -10,6 +10,7 @@ import { getBreakpoint } from './breakpoints.js';
  * @property {string} patternName
  * @property {string} componentName
  * @property {string} variant
+ * @property {import('../patterns/_shared/index.js').Attachment} attachment  捲動方式（已套用 forcedAttachment）
  * @property {Record<string, string | number>} tokens   預設（最小尺寸）的全部 token
  * @property {{ id: string, minWidth: string, tokens: Record<string, string | number> }[]} breakpoints
  *   各斷點只含與上一層不同的 token
@@ -48,6 +49,7 @@ export function buildExportSnapshot(applied) {
     patternName: pattern.name,
     componentName: pattern.componentName,
     variant: 'default',
+    attachment: applied.attachment,
     tokens: {
       ...attachmentToTokens(applied.attachment),
       ...baseToTokens(applied.base),

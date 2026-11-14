@@ -9,8 +9,8 @@ const STATUS_LABEL = {
   failed: '複製失敗，請手動選取',
 };
 
-// 唯讀程式碼區塊 + 複製按鈕
-export function CodeBlock({ id, title, description, code }) {
+// 唯讀程式碼區塊 + 複製按鈕；grow 時程式碼區撐滿父層（flex column）剩餘高度，本身不撐高父層
+export function CodeBlock({ id, title, description, code, grow = false }) {
   const [status, setStatus] = useState('idle');
   const timer = useRef(0);
 
@@ -24,7 +24,7 @@ export function CodeBlock({ id, title, description, code }) {
   }
 
   return (
-    <section aria-labelledby={`${id}-title`} className="flex min-w-0 flex-col gap-2">
+    <section aria-labelledby={`${id}-title`} className={`flex min-w-0 flex-col gap-2 ${grow ? 'min-h-0 flex-1' : ''}`}>
       <div className="flex items-end justify-between gap-3">
         <div className="min-w-0">
           <h3 id={`${id}-title`} className="text-sm font-semibold text-ink">
@@ -46,7 +46,7 @@ export function CodeBlock({ id, title, description, code }) {
       <pre
         tabIndex={0}
         aria-labelledby={`${id}-title`}
-        className="max-h-64 overflow-auto rounded-field bg-code p-4 font-mono text-[12.5px] leading-relaxed text-slate-100 ring-1 ring-white/10 focus-visible:outline-2 focus-visible:outline-accent"
+        className={`${grow ? 'h-0 min-h-40 flex-1' : 'max-h-64'} overflow-auto rounded-field bg-code p-4 font-mono text-[12.5px] leading-relaxed text-slate-100 ring-1 ring-white/10 focus-visible:outline-2 focus-visible:outline-accent`}
       >
         <code>{code}</code>
       </pre>

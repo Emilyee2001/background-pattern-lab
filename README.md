@@ -1,6 +1,6 @@
 # background-pattern-lab
 
-給 UI／前端開發用的 pattern 背景收集與試畫工具：選圖案、調參數與底色、即時預覽，再複製可在其他 React 專案獨立使用的 JSX component 與 CSS。
+給 UI／前端開發用的 pattern 背景收集與試畫工具：選圖案、調參數與底色、即時預覽，再複製可在其他 React 專案獨立使用的 JSX component 與 CSS，或複製一整段「給 AI 的 prompt」，貼給 AI 工具直接加進專案。
 
 技術：Vite + React + JavaScript + Tailwind CSS v4.3.3（`@tailwindcss/vite`，UI token 在 `src/styles/app.css` 的 `@theme`）。
 
@@ -28,7 +28,7 @@ src/
 │  └─ types.js            # JSDoc 型別
 ├─ playground/            # 狀態、驗證、Panel、展示區、複製 modal
 ├─ components/ui/         # 共用介面元件
-├─ export/                # 匯出快照、輸出格式（formats/）、剪貼簿
+├─ export/                # 匯出快照、輸出格式（formats/：React、給 AI 的 prompt）、剪貼簿
 ├─ app/                   # 頁面組裝
 └─ styles/app.css
 ```

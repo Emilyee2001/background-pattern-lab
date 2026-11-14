@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { buildExportSnapshot } from '../export/build-export.js';
+import { promptFormat } from '../export/formats/prompt.js';
 import { reactFormat } from '../export/formats/react.js';
 import { ExportDialog } from '../playground/ExportDialog.jsx';
 import { Panel } from '../playground/Panel.jsx';
@@ -19,7 +20,7 @@ export function App() {
 
   function openExport() {
     const snapshot = buildExportSnapshot(state.applied);
-    setExported({ snapshot, code: reactFormat.toCode(snapshot) });
+    setExported({ snapshot, code: { ...reactFormat.toCode(snapshot), ...promptFormat.toCode(snapshot) } });
     setExportOpen(true);
   }
 
