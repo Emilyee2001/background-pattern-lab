@@ -21,3 +21,13 @@ export const baseToTokens = (v) =>
   v.enabled === false
     ? { '--bpl-base-color': 'transparent', '--bpl-base-opacity': 1 }
     : { '--bpl-base-color': v.color, '--bpl-base-opacity': v.opacity / 100 };
+
+/** @typedef {'scroll' | 'fixed'} Attachment */
+
+/** 預設跟著內容捲動 @type {Attachment} */
+export const ATTACHMENT_DEFAULT = 'scroll';
+
+/** 捲動：子層鋪滿父容器；固定：子層鋪滿畫面 @param {Attachment} attachment */
+export const attachmentToTokens = (attachment) => ({
+  '--bpl-bg-layer-position': attachment === 'fixed' ? 'fixed' : 'absolute',
+});

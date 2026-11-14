@@ -3,12 +3,12 @@
  * 規則：
  * - 包在 @layer components 內
  * - class 為 .bpl-<id>，只使用 --bpl-<id>-* token，不寫死任何數值
+ * - 根元素不設 position：由 _shared/bpl-bg.css 統一設定，切換捲動或固定
  * - 一個元素的背景畫完整個 pattern，不建立額外 DOM
  * - 磁磚置中（background-position: center），四邊留白才會對稱
  */
 @layer components {
   .bpl-example {
-    position: absolute;
     inset: 0;
     opacity: var(--bpl-example-opacity);
     /* TODO: 用 --bpl-example-* token 畫出圖案 */

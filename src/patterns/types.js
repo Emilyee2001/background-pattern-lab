@@ -45,6 +45,7 @@
  * @property {PatternControl[]} [colorControls]  顏色欄位；省略時使用共通的 color、opacity（雙色見 createDualColorControls）
  * @property {(values: Record<string, any>) => FieldErrors} [validate]  跨欄位規則，只在各欄位本身有效時呼叫
  * @property {(values: Record<string, any>) => Record<string, string | number>} toTokens
+ * @property {import('./_shared/index.js').Attachment} [forcedAttachment]  一律使用的捲動方式；設定後 panel 的開關鎖定、不能切換
  * @property {string} css                pattern CSS 原始字串（`?raw`），匯出時使用
  */
 

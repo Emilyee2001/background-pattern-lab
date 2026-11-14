@@ -17,7 +17,6 @@
     /* 50%：磁磚置中 */
     --_x: calc(50% + (var(--bpl-squares-gap) - var(--bpl-squares-size)) / 2);
     --_y: calc(50% + var(--bpl-squares-gap) - var(--bpl-squares-size) / 2);
-    position: absolute;
     inset: 0;
     opacity: var(--bpl-squares-opacity);
     background-image: var(--_square), var(--_square);

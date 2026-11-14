@@ -1,7 +1,6 @@
 /* 磁磚置中：線條從中央往外排，不會固定貼在左邊與上邊 */
 @layer components {
   .bpl-grid {
-    position: absolute;
     inset: 0;
     opacity: var(--bpl-grid-opacity);
     background-image:

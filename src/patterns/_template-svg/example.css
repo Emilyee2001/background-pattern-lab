@@ -3,6 +3,7 @@
  * 規則：
  * - 包在 @layer components 內
  * - class 為 .bpl-<id>，只使用 --bpl-<id>-* token
+ * - 根元素不設 position：由 _shared/bpl-bg.css 統一設定，切換捲動或固定
  * - SVG 以 data URI 作為 mask，只提供形狀；顏色由 background-color 決定，所以顏色仍是 token
  * - data URI 內不能用 var()：形狀、角度、線寬都寫死在 SVG 裡。% 與 # 要寫成 %25、%23
  * - SVG 不設 viewBox，1 單位 = 1px，圖形畫在 24×24 內。細節用挖空表現（fill-rule='evenodd'），不用第二個顏色
@@ -27,7 +28,6 @@
     --_cell: calc(var(--bpl-example-gap) / var(--_scale));
     /* 50%：磁磚置中，四邊留白才會對稱；再加 (格子 − 24px) ÷ 2，讓圖形落在格子中央 */
     --_offset: calc(50% + (var(--_cell) - 24px) / 2);
-    position: absolute;
     top: 0;
     left: 0;
     width: calc(100% / var(--_scale));

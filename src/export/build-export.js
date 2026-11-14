@@ -1,6 +1,6 @@
 // @ts-check
 // 從 applied 產生固定的匯出快照，與輸出格式無關
-import { BASE_DEFAULTS, baseCss, baseToTokens } from '../patterns/_shared/index.js';
+import { ATTACHMENT_DEFAULT, BASE_DEFAULTS, attachmentToTokens, baseCss, baseToTokens } from '../patterns/_shared/index.js';
 import { getPattern } from '../patterns/registry.js';
 import { getBreakpoint } from './breakpoints.js';
 
@@ -13,7 +13,7 @@ import { getBreakpoint } from './breakpoints.js';
  * @property {Record<string, string | number>} tokens   預設（最小尺寸）的全部 token
  * @property {{ id: string, minWidth: string, tokens: Record<string, string | number> }[]} breakpoints
  *   各斷點只含與上一層不同的 token
- * @property {Record<string, string | number>} defaultTokens  底色與 pattern 的預設值，variant 未定義時的後備
+ * @property {Record<string, string | number>} defaultTokens  捲動方式、底色與 pattern 的預設值，variant 未定義時的後備
  * @property {string[]} sharedCss   共用規則：根元素／底色層、該 pattern 規則
  */
 
@@ -28,6 +28,7 @@ function diffTokens(prev, next) {
  *   pattern: Record<string, any>,
  *   breakpoints: { id: string, values: Record<string, any> }[],
  *   base: { enabled: boolean, color: string, opacity: number },
+ *   attachment: import('../patterns/_shared/index.js').Attachment,
  * }} applied
  * @returns {ExportSnapshot}
  */
@@ -47,9 +48,17 @@ export function buildExportSnapshot(applied) {
     patternName: pattern.name,
     componentName: pattern.componentName,
     variant: 'default',
-    tokens: { ...baseToTokens(applied.base), ...pattern.toTokens(applied.pattern) },
+    tokens: {
+      ...attachmentToTokens(applied.attachment),
+      ...baseToTokens(applied.base),
+      ...pattern.toTokens(applied.pattern),
+    },
     breakpoints,
-    defaultTokens: { ...baseToTokens(BASE_DEFAULTS), ...pattern.toTokens(pattern.defaults) },
+    defaultTokens: {
+      ...attachmentToTokens(pattern.forcedAttachment ?? ATTACHMENT_DEFAULT),
+      ...baseToTokens(BASE_DEFAULTS),
+      ...pattern.toTokens(pattern.defaults),
+    },
     sharedCss: [baseCss, pattern.css],
   };
 }

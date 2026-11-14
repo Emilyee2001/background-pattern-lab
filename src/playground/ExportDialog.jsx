@@ -48,9 +48,10 @@ export function ExportDialog({ open, onClose, exported }) {
                   引入，把 <Code>{`<${exported.snapshot.componentName} />`}</Code> 放進父容器，背景會位於內容下方，內容不需另設 z-index。
                 </li>
                 <li>
-                  背景只蓋住父容器範圍。若要整頁固定、捲動時不動，可傳入{' '}
-                  <Code>{`<${exported.snapshot.componentName} className="fixed" />`}</Code>（CSS 位於{' '}
-                  <Code>@layer components</Code>，Tailwind utility 會覆蓋它）。
+                  背景只蓋住父容器範圍。開啟「固定背景」時，背景固定在畫面上、捲動時不動，但一樣只顯示在父容器範圍內（由
+                  Token CSS 的 <Code>--bpl-bg-layer-position</Code> 控制）。祖先元素設定了 <Code>transform</Code>、
+                  <Code>filter</Code>、<Code>backdrop-filter</Code>、<Code>will-change</Code> 或 <Code>contain</Code>{' '}
+                  時，固定會失效。
                 </li>
                 <li>
                   RWD 斷點使用 Tailwind 預設寬度（md <Code>48rem</Code> = 768px、lg <Code>64rem</Code> = 1024px），採

@@ -15,7 +15,6 @@
       transparent calc(50% - var(--_half) - var(--_aa) / 2),
       var(--bpl-cross-color) calc(50% - var(--_half) + var(--_aa) / 2) calc(50% + var(--_half) - var(--_aa) / 2),
       transparent calc(50% + var(--_half) + var(--_aa) / 2);
-    position: absolute;
     top: calc(var(--bpl-cross-center-y) - 100%);
     left: calc(var(--bpl-cross-center-x) - 100%);
     width: 200%;

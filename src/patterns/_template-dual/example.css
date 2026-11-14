@@ -3,6 +3,7 @@
  * 規則：
  * - 包在 @layer components 內
  * - class 為 .bpl-<id>，只使用 --bpl-<id>-* token
+ * - 根元素不設 position：由 _shared/bpl-bg.css 統一設定，切換捲動或固定
  * - 兩種圖形各自一個顏色：圖形 A 畫在 ::before（color、opacity），圖形 B 畫在 ::after（secondary-color、secondary-opacity）
  * - 根元素只負責縮放，本身不畫東西，也不設 opacity，兩層透明度才會各自獨立
  * - SVG 的寫法同 _template-svg：不設 viewBox、畫在 24×24 內、% 與 # 寫成 %25、%23
@@ -17,7 +18,6 @@
     --_cell: calc(var(--bpl-example-gap) / var(--_scale));
     /* 50%：磁磚置中，四邊留白才會對稱；再加 (格子 − 24px) ÷ 2，讓圖形落在格子中央 */
     --_offset: calc(50% + (var(--_cell) - 24px) / 2);
-    position: absolute;
     top: 0;
     left: 0;
     width: calc(100% / var(--_scale));

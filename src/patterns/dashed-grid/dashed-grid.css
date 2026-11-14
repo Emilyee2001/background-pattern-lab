@@ -10,7 +10,6 @@
   .bpl-dashed-grid {
     --_period: calc(var(--bpl-dashed-grid-gap) / var(--bpl-dashed-grid-dashes));
     --_offset: calc(50% + (var(--bpl-dashed-grid-thickness) - var(--bpl-dashed-grid-gap)) / 2);
-    position: absolute;
     inset: 0;
     opacity: var(--bpl-dashed-grid-opacity);
   }

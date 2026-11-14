@@ -11,7 +11,7 @@ import { ControlFields } from './ControlFields.jsx';
 import { LevelHeader } from './LevelHeader.jsx';
 import { PatternPicker } from './PatternPicker.jsx';
 
-// 單欄排版，DOM 順序即由上到下的順序：Pattern → 參數（預設、斷點）→ 底色 → 複製按鈕
+// 單欄排版，DOM 順序即由上到下的順序：Pattern → 參數（預設、斷點）→ 底色 → 捲動 → 複製按鈕
 // 各尺寸的外框內距與間距相同，只有 panel 寬度與 Pattern、參數欄位的欄數隨斷點改變
 
 export function Panel({ state, activeLevel, collapsed, onToggleCollapsed, onExport, exportButtonRef }) {
@@ -97,6 +97,27 @@ export function Panel({ state, activeLevel, collapsed, onToggleCollapsed, onExpo
                 onChange={(values) => actions.setFields('base', values)}
                 onBlur={(key) => actions.normalizeColor('base', key)}
               />
+            </Card>
+
+            <Card aria-label="捲動">
+              <div className="flex flex-col gap-1.5">
+                <CardHeader
+                  title="捲動"
+                  aside={
+                    <Switch
+                      label="固定背景"
+                      checked={applied.attachment === 'fixed'}
+                      disabled={Boolean(pattern.forcedAttachment)}
+                      onChange={(fixed) => actions.setAttachment(fixed ? 'fixed' : 'scroll')}
+                    />
+                  }
+                />
+                <p className="text-[11px] leading-snug text-ink-subtle">
+                  {pattern.forcedAttachment
+                    ? '一律固定背景，無法切換。'
+                    : '開啟後背景固定在畫面上，不跟著內容捲動。頁面要比畫面高、可以捲動時，才看得出差異。'}
+                </p>
+              </div>
             </Card>
 
             <Button ref={exportButtonRef} variant="primary" size="lg" className="w-full" onClick={onExport}>

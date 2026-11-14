@@ -1,13 +1,23 @@
+/*
+ * 背景根元素與底色層。
+ * - 捲動／固定：子層（底色層、pattern 層）的 position 由 --bpl-bg-layer-position 決定。
+ *   absolute 時鋪滿父容器、跟著內容捲動；fixed 時鋪滿畫面、捲動時不動。
+ *   各 pattern 的根元素不設 position，統一由這裡控制。
+ * - fixed 子層不受 overflow 裁切，改用 clip-path 限制在根元素範圍內，背景只出現在父容器裡。
+ */
 @layer components {
   .bpl-bg {
     position: absolute;
     inset: 0;
     z-index: -1;
     overflow: hidden;
+    clip-path: inset(0);
     pointer-events: none;
   }
+  .bpl-bg > * {
+    position: var(--bpl-bg-layer-position);
+  }
   .bpl-bg__base {
-    position: absolute;
     inset: 0;
     background-color: var(--bpl-base-color);
     opacity: var(--bpl-base-opacity);

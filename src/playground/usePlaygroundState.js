@@ -4,10 +4,12 @@
 // Pattern 參數依 level 分組：'default' 為預設（最小尺寸），'md'／'lg' 為 RWD 斷點。
 // 每個 level 與底色各自是一個驗證組，互不阻擋。
 // 停用底色（baseEnabled = false）時保留底色的值，重新啟用即恢復。
+// 捲動方式（attachment）是全域設定，不分斷點，也不需要驗證。
+// Pattern 有 forcedAttachment 時 applied 改用強制值，draft 保留使用者的選擇，切回其他 pattern 即恢復。
 import { useMemo, useReducer } from 'react';
 import { BREAKPOINTS } from '../export/breakpoints.js';
 import { getPatternControls } from '../patterns/common-controls.js';
-import { BASE_DEFAULTS, baseControls } from '../patterns/_shared/index.js';
+import { ATTACHMENT_DEFAULT, BASE_DEFAULTS, baseControls } from '../patterns/_shared/index.js';
 import { DEFAULT_PATTERN_ID, getPattern, patterns } from '../patterns/registry.js';
 import { normalizeColor, toDraft, validateGroup } from './validation.js';
 
@@ -23,6 +25,7 @@ function createInitialState() {
       patterns: { [pattern.id]: { default: toDraft(pattern.defaults) } },
       base: toDraft(BASE_DEFAULTS),
       baseEnabled: true,
+      attachment: ATTACHMENT_DEFAULT,
     },
     lastValid: {
       patterns: Object.fromEntries(patterns.map((p) => [p.id, { default: { ...p.defaults } }])),
@@ -127,6 +130,8 @@ function reducer(state, action) {
     }
     case 'toggleBase':
       return { ...state, draft: { ...state.draft, baseEnabled: !state.draft.baseEnabled } };
+    case 'setAttachment':
+      return { ...state, draft: { ...state.draft, attachment: action.attachment } };
     case 'addBreakpoint': {
       const { breakpoints } = state.draft.responsive;
       const nextBp = BREAKPOINTS.find((bp) => !breakpoints.includes(bp.id));
@@ -163,7 +168,7 @@ function reducer(state, action) {
 export function usePlaygroundState() {
   const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
   const { draft, lastValid } = state;
-  const { patternId, responsive, baseEnabled } = draft;
+  const { patternId, responsive, baseEnabled, attachment } = draft;
 
   const pattern = getPattern(patternId);
   const patternDraft = draft.patterns[patternId];
@@ -190,8 +195,9 @@ export function usePlaygroundState() {
         .slice(1)
         .map((id) => ({ id, values: patternValid[id] })),
       base: { enabled: baseEnabled, ...lastValid.base },
+      attachment: pattern.forcedAttachment ?? attachment,
     }),
-    [patternId, patternValid, responsive, baseEnabled, lastValid.base],
+    [patternId, patternValid, responsive, baseEnabled, lastValid.base, pattern.forcedAttachment, attachment],
   );
 
   const actions = useMemo(
@@ -203,6 +209,8 @@ export function usePlaygroundState() {
       normalizeColor: (target, key) => dispatch({ type: 'normalizeColor', target, key }),
       toggleResponsive: () => dispatch({ type: 'toggleResponsive' }),
       toggleBase: () => dispatch({ type: 'toggleBase' }),
+      /** @param {import('../patterns/_shared/index.js').Attachment} attachment */
+      setAttachment: (attachment) => dispatch({ type: 'setAttachment', attachment }),
       addBreakpoint: () => dispatch({ type: 'addBreakpoint' }),
       /** @param {Level} id */
       removeBreakpoint: (id) => dispatch({ type: 'removeBreakpoint', id }),

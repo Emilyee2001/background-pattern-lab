@@ -8,6 +8,8 @@ export const crossPattern = {
   id: 'cross',
   name: '十字線',
   componentName: 'CrossBackground',
+  // 中心點以容器大小計算：固定時以畫面為準，頁面再長，中心點也不會跑出畫面
+  forcedAttachment: 'fixed',
   defaults: {
     horizontalLength: 0,
     verticalLength: 0,

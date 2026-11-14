@@ -13,7 +13,6 @@
       var(--bpl-dots-color) calc(var(--bpl-dots-size) / 2),
       transparent calc(var(--bpl-dots-size) / 2 + 0.5px)
     );
-    position: absolute;
     inset: 0;
     opacity: var(--bpl-dots-opacity);
     background-image: var(--_dot), var(--_dot);

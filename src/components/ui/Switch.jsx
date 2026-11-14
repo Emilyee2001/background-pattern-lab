@@ -1,12 +1,13 @@
-// 開關：role="switch"，標籤文字在左
-export function Switch({ label, checked, onChange }) {
+// 開關：role="switch"，標籤文字在左；disabled 時維持目前狀態、不能切換
+export function Switch({ label, checked, disabled = false, onChange }) {
   return (
     <button
       type="button"
       role="switch"
       aria-checked={checked}
+      disabled={disabled}
       onClick={() => onChange(!checked)}
-      className="group inline-flex items-center gap-2 rounded-full text-[11px] font-semibold tracking-[0.08em] text-ink-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+      className="group inline-flex items-center gap-2 rounded-full text-[11px] font-semibold tracking-[0.08em] text-ink-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-45"
     >
       {label}
       <span

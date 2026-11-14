@@ -6,7 +6,6 @@
   .bpl-double-stripes {
     --_aa: 1px;
     --_t: var(--bpl-double-stripes-thickness);
-    position: absolute;
     inset: 0;
     opacity: var(--bpl-double-stripes-opacity);
     background-image: repeating-linear-gradient(

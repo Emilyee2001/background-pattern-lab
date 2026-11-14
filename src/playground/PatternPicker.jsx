@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '../components/ui/Button.jsx';
 import { CardHeader } from '../components/ui/Card.jsx';
 import { ChevronDownIcon } from '../components/ui/icons.jsx';
-import { BASE_DEFAULTS, baseToTokens } from '../patterns/_shared/index.js';
+import { BASE_DEFAULTS, attachmentToTokens, baseToTokens } from '../patterns/_shared/index.js';
 import { BackgroundPreview } from './BackgroundPreview.jsx';
 import { useMediaQuery } from './useMediaQuery.js';
 
@@ -61,9 +61,14 @@ export function PatternPicker({ patterns, selectedId, onSelect }) {
               }`}
             >
               <span className="relative isolate block aspect-square overflow-hidden rounded-lg ring-1 ring-ink/8">
+                {/* 示意圖固定在格子內，不跟著設定改成 fixed */}
                 <BackgroundPreview
                   patternId={pattern.id}
-                  style={{ ...baseToTokens(BASE_DEFAULTS), ...pattern.toTokens({ ...pattern.defaults, ...pattern.previewValues }) }}
+                  style={{
+                    ...attachmentToTokens('scroll'),
+                    ...baseToTokens(BASE_DEFAULTS),
+                    ...pattern.toTokens({ ...pattern.defaults, ...pattern.previewValues }),
+                  }}
                 />
               </span>
               <span className={`text-xs ${selected ? 'font-semibold text-ink' : 'text-ink-muted group-hover:text-ink'}`}>

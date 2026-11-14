@@ -12,7 +12,6 @@
     /* 50%：磁磚置中；圖形畫在磁磚左上角，再位移讓第一層的圖形落在元素正中央，四邊留白才會對稱 */
     --_x: calc(50% + (var(--_cell) - 24px) / 2);
     --_y: calc(50% + var(--_cell) - 12px);
-    position: absolute;
     top: 0;
     left: 0;
     width: calc(100% / var(--_scale));

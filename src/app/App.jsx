@@ -30,16 +30,19 @@ export function App() {
 
   return (
     <>
-      <Stage applied={state.applied} />
-
       {/* 展開時置中，內容超出時整頁捲動，複製按鈕永遠在最下方；
-          收合時只剩標題 bar，貼齊畫面下方。收合後內容高度為 0，捲動位置自然回到頂部 */}
-      <main className="fixed inset-0 overflow-y-auto">
+          收合時只剩標題 bar，貼齊畫面下方。收合後內容高度為 0，捲動位置自然回到頂部。
+          展示區放在捲動內容裡，鋪滿內容高度，背景跟著內容捲動。
+          棋盤格畫在捲動容器上：預設不隨內容捲動，捲動模式加 bg-local 讓它跟著走，與背景同步 */}
+      <main
+        className={`fixed inset-0 overflow-y-auto bg-checker ${state.applied.attachment === 'fixed' ? '' : 'bg-local'}`}
+      >
         <div
-          className={`flex min-h-full justify-center px-4 ${
+          className={`relative flex min-h-full justify-center px-4 ${
             panelHidden ? 'items-end pb-[calc(1rem+env(safe-area-inset-bottom))]' : 'items-center pt-20 pb-8'
           }`}
         >
+          <Stage applied={state.applied} />
           <Panel
             state={state}
             activeLevel={activeLevel}
