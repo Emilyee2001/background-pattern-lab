@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { buildExportSnapshot } from '../export/build-export.js';
-import { buildDefaultTokenCss, buildTokenCss } from '../export/token-css.js';
+import { buildBaseDefaultTokenCss, buildPatternDefaultTokenCss, buildTokenCss } from '../export/token-css.js';
 import { BackgroundPreview } from './BackgroundPreview.jsx';
 
 // 展示區：本身就是「使用端容器」（定位 + isolate），棋盤格畫在外層的捲動容器上（見 App）。
@@ -8,7 +8,10 @@ import { BackgroundPreview } from './BackgroundPreview.jsx';
 // Token 以匯出相同的 Token CSS 注入，RWD 斷點直接依視窗寬度生效。
 export function Stage({ applied }) {
   const snapshot = useMemo(() => buildExportSnapshot(applied), [applied]);
-  const tokenCss = useMemo(() => buildDefaultTokenCss(snapshot) + buildTokenCss(snapshot), [snapshot]);
+  const tokenCss = useMemo(
+    () => buildBaseDefaultTokenCss(snapshot) + buildPatternDefaultTokenCss(snapshot) + buildTokenCss(snapshot),
+    [snapshot],
+  );
 
   return (
     <div className="absolute inset-0 isolate">

@@ -8,12 +8,22 @@ function declarations(tokens, indent) {
 
 /**
  * 預設 token 區塊：specificity 為 0，任何 variant 的 token 都能覆寫；
- * variant 打錯或未定義時，背景退回 pattern 預設樣式而不是整個消失
+ * variant 打錯或未定義時，背景退回預設樣式而不是整個消失
+ * @param {string} selector @param {Record<string, string | number>} tokens
+ */
+function defaultBlock(selector, tokens) {
+  return `@layer components {\n  ${selector} {\n${declarations(tokens, '    ')}\n  }\n}\n`;
+}
+
+/** 根元素與底色層的預設 token，所有 pattern 共用 @param {import('./build-export').ExportSnapshot} s */
+export const buildBaseDefaultTokenCss = (s) => defaultBlock(':where(.bpl-bg)', s.defaultTokens.base);
+
+/**
+ * 該 pattern 的預設 token：只套用在含此 pattern 層的根元素，多款 pattern 並存時互不影響
  * @param {import('./build-export').ExportSnapshot} s
  */
-export function buildDefaultTokenCss(s) {
-  return `@layer components {\n  :where(.bpl-bg) {\n${declarations(s.defaultTokens, '    ')}\n  }\n}\n`;
-}
+export const buildPatternDefaultTokenCss = (s) =>
+  defaultBlock(`:where(.bpl-bg:has(> .bpl-${s.patternId}))`, s.defaultTokens.pattern);
 
 /** @param {import('./build-export').ExportSnapshot} s */
 export function buildTokenCss(s) {

@@ -14,7 +14,7 @@ export const baseControls = [colorControl, baseOpacityControl];
 export const BASE_DEFAULTS = { color: '#FFFFFF', opacity: 100 };
 
 /**
- * 停用底色時輸出 transparent；DOM 與共用 CSS 不變，之後只改 token 就能加回底色
+ * 停用底色時輸出 transparent；DOM 與 CSS 規則不變，之後只改 token 就能加回底色
  * @param {{ enabled?: boolean, color: string, opacity: number }} v
  */
 export const baseToTokens = (v) =>

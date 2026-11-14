@@ -1,6 +1,6 @@
 // @ts-check
 // React 輸出格式：JSX 只負責 class 結構，所有繪製都在 CSS
-import { buildDefaultTokenCss, buildTokenCss } from '../token-css.js';
+import { buildBaseDefaultTokenCss, buildPatternDefaultTokenCss, buildTokenCss } from '../token-css.js';
 
 /** @param {import('../build-export').ExportSnapshot} s */
 function toJsx(s) {
@@ -15,10 +15,8 @@ function toJsx(s) {
 `;
 }
 
-/** @param {import('../build-export').ExportSnapshot} s */
-function toSharedCss(s) {
-  return `${[...s.sharedCss, buildDefaultTokenCss(s)].map((css) => css.trim()).join('\n\n')}\n`;
-}
+/** @param {string[]} parts */
+const joinCss = (parts) => `${parts.map((css) => css.trim()).join('\n\n')}\n`;
 
 export const reactFormat = {
   id: 'react',
@@ -26,7 +24,13 @@ export const reactFormat = {
   /** @param {import('../build-export').ExportSnapshot} snapshot */
   toCode: (snapshot) => ({
     jsx: toJsx(snapshot),
-    sharedCss: toSharedCss(snapshot),
+    // 前半為所有 BPL 背景共用的根元素與底色層，後半為此 pattern 專屬
+    sharedCss: joinCss([
+      snapshot.css.base,
+      buildBaseDefaultTokenCss(snapshot),
+      snapshot.css.pattern,
+      buildPatternDefaultTokenCss(snapshot),
+    ]),
     tokenCss: buildTokenCss(snapshot),
   }),
 };

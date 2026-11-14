@@ -14,8 +14,9 @@ import { getBreakpoint } from './breakpoints.js';
  * @property {Record<string, string | number>} tokens   預設（最小尺寸）的全部 token
  * @property {{ id: string, minWidth: string, tokens: Record<string, string | number> }[]} breakpoints
  *   各斷點只含與上一層不同的 token
- * @property {Record<string, string | number>} defaultTokens  捲動方式、底色與 pattern 的預設值，variant 未定義時的後備
- * @property {string[]} sharedCss   共用規則：根元素／底色層、該 pattern 規則
+ * @property {{ base: Record<string, string | number>, pattern: Record<string, string | number> }} defaultTokens
+ *   variant 未定義時的後備：base 為捲動方式與底色（所有 pattern 共用），pattern 為該 pattern 的預設值（含 forcedAttachment）
+ * @property {{ base: string, pattern: string }} css  base 為根元素與底色層（每個專案一份），pattern 為該 pattern 的規則
  */
 
 /** 只保留 next 中與 prev 不同的 token */
@@ -57,10 +58,12 @@ export function buildExportSnapshot(applied) {
     },
     breakpoints,
     defaultTokens: {
-      ...attachmentToTokens(pattern.forcedAttachment ?? ATTACHMENT_DEFAULT),
-      ...baseToTokens(BASE_DEFAULTS),
-      ...pattern.toTokens(pattern.defaults),
+      base: { ...attachmentToTokens(ATTACHMENT_DEFAULT), ...baseToTokens(BASE_DEFAULTS) },
+      pattern: {
+        ...(pattern.forcedAttachment && attachmentToTokens(pattern.forcedAttachment)),
+        ...pattern.toTokens(pattern.defaults),
+      },
     },
-    sharedCss: [baseCss, pattern.css],
+    css: { base: baseCss, pattern: pattern.css },
   };
 }
