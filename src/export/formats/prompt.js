@@ -1,7 +1,6 @@
 // @ts-check
 // 給 AI 的 prompt：固定文字在 prompt-template.md，程式碼直接沿用 React 格式的輸出
 import template from './prompt-template.md?raw';
-import testReport from './prompt-test-report.md?raw'; // 測試階段用，測完刪除這行、下方的 testReport 與該檔案
 import { reactFormat } from './react.js';
 
 /**
@@ -47,6 +46,6 @@ export const promptFormat = {
       sharedCss: code.sharedCss.trimEnd(),
       tokenCss: code.tokenCss.trimEnd(),
     });
-    return { prompt: `${prompt}\n${fill(testReport, {})}` };
+    return { prompt };
   },
 };
