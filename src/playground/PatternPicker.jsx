@@ -57,10 +57,10 @@ export function PatternPicker({ patterns, selectedId, onSelect }) {
               aria-pressed={selected}
               onClick={() => onSelect(pattern.id)}
               className={`group flex flex-col gap-1.5 rounded-xl p-1.5 text-center transition focus-visible:outline-2 focus-visible:outline-accent ${
-                selected ? 'bg-white/80 shadow-sm ring-2 ring-accent' : 'ring-1 ring-ink/8 hover:bg-white/50'
+                selected ? 'bg-white/80 shadow-sm ring-2 ring-accent' : 'ring-1 ring-primary/8 hover:bg-white/50'
               }`}
             >
-              <span className="relative isolate block aspect-square overflow-hidden rounded-lg ring-1 ring-ink/8">
+              <span className="relative isolate block aspect-square overflow-hidden rounded-lg ring-1 ring-primary/8">
                 {/* 示意圖固定在格子內，不跟著設定改成 fixed */}
                 <BackgroundPreview
                   patternId={pattern.id}
@@ -71,7 +71,7 @@ export function PatternPicker({ patterns, selectedId, onSelect }) {
                   }}
                 />
               </span>
-              <span className={`text-xs ${selected ? 'font-semibold text-ink' : 'text-ink-muted group-hover:text-ink'}`}>
+              <span className={`text-xs ${selected ? 'font-semibold text-primary' : 'text-secondary group-hover:text-primary'}`}>
                 {pattern.name}
               </span>
             </button>

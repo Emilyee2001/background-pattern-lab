@@ -1,24 +1,38 @@
 /* Tailwind 先載入以確定 cascade layer 順序；pattern CSS 由 src/patterns 之後引入 */
 @import "tailwindcss";
 
-/* 工具 UI token：全站外觀只從這裡調整 */
+/* 工具 UI token：全站外觀只從這裡調整
+   命名依用途，不依外觀：
+   - 層級：primary／secondary／tertiary（例如文字的主要、次要、輔助）
+   - 狀態：accent、danger、success
+   - 元件專屬：<元件>-background／-foreground／-border，同一元件的多個顏色用層級區分 */
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  --color-ink: #0F172A;
-  --color-ink-muted: #475569;
-  --color-ink-subtle: #64748B;
+  /* 主要文字與主要按鈕；加上透明度作為邊線、淡底與陰影 */
+  --color-primary: #0F172A;
+  /* 次要文字：標題、未選取的操作 */
+  --color-secondary: #475569;
+  /* 輔助文字：提示、範圍、單位 */
+  --color-tertiary: #64748B;
+
+  /* 焦點、選取、開啟中 */
   --color-accent: #4338CA;
-  --color-accent-soft: #E0E7FF;
+  /* 錯誤 */
   --color-danger: #BE123C;
-  --color-danger-soft: #FFE4E6;
-  --color-glass: rgb(255 255 255 / 0.6);
-  --color-glass-field: rgb(255 255 255 / 0.7);
-  --color-field: #F8FAFC;
+  /* 生效中 */
+  --color-success: #047857;
+
+  --color-glass-background: rgb(255 255 255 / 0.6);
   --color-glass-border: rgb(255 255 255 / 0.75);
-  --color-code: rgb(15 23 42 / 0.88);
-  --color-checker: #E2E4E9;
+  --color-field-background: #F8FAFC;
+  --color-button-secondary-background: rgb(255 255 255 / 0.7);
+  --color-code-background: color-mix(in srgb, var(--color-primary) 88%, transparent);
+  --color-code-foreground: #F1F5F9;
+  /* 展示區後方的棋盤格 */
+  --color-checker-primary: #FFFFFF;
+  --color-checker-secondary: #E2E4E9;
 
   --radius-panel: 2rem;
   --radius-card: 1rem;
@@ -32,16 +46,23 @@
   --container-panel: 33.5rem;
   --container-panel-lg: 47.5rem;
 
+  /* 陰影顏色取自 primary，改 primary 時一起更新 */
   --shadow-glass:
     inset 0 1px 0 0 rgb(255 255 255 / 0.85),
-    0 0 0 1px rgb(15 23 42 / 0.06),
-    0 24px 64px -16px rgb(15 23 42 / 0.4);
+    0 0 0 1px color-mix(in srgb, var(--color-primary) 6%, transparent),
+    0 24px 64px -16px color-mix(in srgb, var(--color-primary) 40%, transparent);
+  --shadow-button-primary: 0 8px 20px -8px color-mix(in srgb, var(--color-primary) 60%, transparent);
 }
 
 /* 展示容器後方的棋盤格，讓透明效果可辨識 */
 @utility bg-checker {
-  background-color: #FFFFFF;
-  background-image: conic-gradient(var(--color-checker) 25%, transparent 0 50%, var(--color-checker) 0 75%, transparent 0);
+  background-color: var(--color-checker-primary);
+  background-image: conic-gradient(
+    var(--color-checker-secondary) 25%,
+    transparent 0 50%,
+    var(--color-checker-secondary) 0 75%,
+    transparent 0
+  );
   background-size: 16px 16px;
 }
 
@@ -50,7 +71,7 @@
     color-scheme: light;
   }
   body {
-    @apply bg-white font-sans text-ink antialiased;
+    @apply bg-white font-sans text-primary antialiased;
   }
   /* Tailwind v4 預設按鈕游標為 default，統一改回 pointer */
   button:not(:disabled) {

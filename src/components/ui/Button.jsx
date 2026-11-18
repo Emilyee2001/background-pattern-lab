@@ -1,9 +1,9 @@
 const VARIANTS = {
   primary:
-    'bg-ink text-white shadow-[0_8px_20px_-8px_rgb(15_23_42/0.6)] hover:bg-ink/90 active:bg-ink',
+    'bg-primary text-white shadow-button-primary hover:bg-primary/90 active:bg-primary',
   secondary:
-    'bg-glass-field text-ink ring-1 ring-ink/10 hover:bg-white active:bg-white/90',
-  ghost: 'text-ink-muted hover:bg-ink/5 hover:text-ink',
+    'bg-button-secondary-background text-primary ring-1 ring-primary/10 hover:bg-white active:bg-white/90',
+  ghost: 'text-secondary hover:bg-primary/5 hover:text-primary',
 };
 
 const SIZES = {

@@ -61,7 +61,7 @@ export function AddBreakpointCard({ breakpoint, onAdd, className = '' }) {
     <button
       type="button"
       onClick={onAdd}
-      className={`flex min-h-28 flex-col items-center justify-center gap-1.5 rounded-card border-2 border-dashed border-ink/15 bg-white/35 p-5 text-ink-muted transition hover:border-accent/50 hover:bg-white/65 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${className}`}
+      className={`flex min-h-28 flex-col items-center justify-center gap-1.5 rounded-card border-2 border-dashed border-primary/15 bg-white/35 p-5 text-secondary transition hover:border-accent/50 hover:bg-white/65 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${className}`}
     >
       <PlusIcon className="size-5" />
       <span className="text-sm font-medium">新增 {breakpoint.id} 斷點</span>

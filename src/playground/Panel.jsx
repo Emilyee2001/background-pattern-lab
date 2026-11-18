@@ -3,6 +3,8 @@ import { Card, CardHeader } from '../components/ui/Card.jsx';
 import { GlassSurface } from '../components/ui/GlassSurface.jsx';
 import { Switch } from '../components/ui/Switch.jsx';
 import { CodeIcon, EyeIcon, EyeOffIcon } from '../components/ui/icons.jsx';
+// 版本號只寫在 package.json；具名引入時 Vite 只打包這個欄位
+import { version } from '../../package.json';
 import { BREAKPOINTS } from '../export/breakpoints.js';
 import { baseControls } from '../patterns/_shared/index.js';
 import { patterns } from '../patterns/registry.js';
@@ -32,8 +34,8 @@ export function Panel({ state, activeLevel, collapsed, onToggleCollapsed, onExpo
     <GlassSurface className="w-panel-sm max-w-full sm:w-panel lg:w-panel-lg">
       <header className={`relative flex items-center gap-3 px-8 pt-5 ${collapsed ? 'pb-5' : 'pb-4'}`}>
         <div className="mr-auto flex items-center gap-2 pl-1">
-          <h1 className="text-[15px] font-semibold tracking-tight text-ink">Background Pattern Lab</h1>
-          <span className="rounded-md border border-ink/15 bg-white/70 px-1.5 py-0.5 font-mono text-[10px] font-medium text-ink-muted">v1</span>
+          <h1 className="text-[15px] font-semibold tracking-tight text-primary">Background Pattern Lab</h1>
+          <span className="rounded-md border border-primary/15 bg-white/70 px-1.5 py-0.5 font-mono text-[10px] font-medium text-secondary">v{version}</span>
         </div>
         {/* 收合時用 before 撐滿整條 bar，整條都能點 */}
         <Button
@@ -112,7 +114,7 @@ export function Panel({ state, activeLevel, collapsed, onToggleCollapsed, onExpo
                     />
                   }
                 />
-                <p className="text-[11px] leading-snug text-ink-subtle">
+                <p className="text-[11px] leading-snug text-tertiary">
                   {pattern.forcedAttachment
                     ? '一律固定背景，無法切換。'
                     : '開啟後背景固定在畫面上，不跟著內容捲動。頁面要比畫面高、可以捲動時，才看得出差異。'}

@@ -19,7 +19,7 @@ export function Dialog({ open, onClose, labelledBy, className = '', children }) 
       onClick={(e) => {
         if (e.target === e.currentTarget) e.currentTarget.close();
       }}
-      className={`m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] overflow-visible bg-transparent p-0 text-ink backdrop:bg-ink/25 backdrop:backdrop-blur-[2px] ${className}`}
+      className={`m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] overflow-visible bg-transparent p-0 text-primary backdrop:bg-primary/25 backdrop:backdrop-blur-[2px] ${className}`}
     >
       {children}
     </dialog>

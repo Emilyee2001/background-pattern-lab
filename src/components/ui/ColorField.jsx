@@ -33,13 +33,13 @@ export function ColorField({ id, swatch, alpha, onPick, disabled, ...props }) {
             disabled={disabled}
             aria-label="開啟調色盤"
             title="開啟調色盤"
-            className="size-5 shrink-0 rounded-md shadow-[inset_0_0_0_1px_rgb(15_23_42/0.15)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed"
+            className="size-5 shrink-0 rounded-md inset-ring inset-ring-primary/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed"
             style={{ backgroundColor: swatch, anchorName }}
           />
           <div
             id={popoverId}
             popover="auto"
-            className="overflow-visible rounded-card border-0 bg-white p-3 text-ink shadow-glass supports-[anchor-name:--a]:inset-auto supports-[anchor-name:--a]:m-0 supports-[anchor-name:--a]:mt-2 [position-area:bottom_span-right] [position-try-fallbacks:flip-block,flip-inline]"
+            className="overflow-visible rounded-card border-0 bg-white p-3 text-primary shadow-glass supports-[anchor-name:--a]:inset-auto supports-[anchor-name:--a]:m-0 supports-[anchor-name:--a]:mt-2 [position-area:bottom_span-right] [position-try-fallbacks:flip-block,flip-inline]"
             style={{ positionAnchor: anchorName }}
           >
             {alpha ? (

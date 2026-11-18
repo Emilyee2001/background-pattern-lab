@@ -16,7 +16,7 @@ export function SegmentedControl({ idPrefix, label, options, value, onChange, cl
   }
 
   return (
-    <div role="tablist" aria-label={label} className={`inline-flex gap-1 rounded-field bg-ink/6 p-1 ${className}`}>
+    <div role="tablist" aria-label={label} className={`inline-flex gap-1 rounded-field bg-primary/6 p-1 ${className}`}>
       {options.map((option, i) => {
         const selected = option.value === value;
         return (
@@ -34,7 +34,7 @@ export function SegmentedControl({ idPrefix, label, options, value, onChange, cl
             onClick={() => onChange(option.value)}
             onKeyDown={(e) => handleKeyDown(e, i)}
             className={`h-8 rounded-lg px-3 text-xs font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
-              selected ? 'bg-white text-ink shadow-sm ring-1 ring-ink/8' : 'text-ink-muted hover:text-ink'
+              selected ? 'bg-white text-primary shadow-sm ring-1 ring-primary/8' : 'text-secondary hover:text-primary'
             }`}
           >
             {option.label}

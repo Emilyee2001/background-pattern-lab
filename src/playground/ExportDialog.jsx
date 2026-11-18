@@ -7,19 +7,19 @@ import { SegmentedControl } from '../components/ui/SegmentedControl.jsx';
 import { CloseIcon } from '../components/ui/icons.jsx';
 
 function Code({ children }) {
-  return <code className="rounded bg-ink/8 px-1 py-px font-mono text-[11.5px] text-ink">{children}</code>;
+  return <code className="rounded bg-primary/8 px-1 py-px font-mono text-[11.5px] text-primary">{children}</code>;
 }
 
 // 說明區塊：ordered 為依序執行的步驟，否則為不分先後的注意事項
 function Usage({ id, title = '使用方式', ordered = true, children }) {
   const List = ordered ? 'ol' : 'ul';
   return (
-    <section aria-labelledby={id} className="rounded-field bg-white/60 p-4 ring-1 ring-ink/8">
-      <h3 id={id} className="text-sm font-semibold text-ink">
+    <section aria-labelledby={id} className="rounded-field bg-white/60 p-4 ring-1 ring-primary/8">
+      <h3 id={id} className="text-sm font-semibold text-primary">
         {title}
       </h3>
       <List
-        className={`mt-2 space-y-1.5 pl-5 text-xs leading-relaxed text-ink-muted ${ordered ? 'list-decimal' : 'list-disc'}`}
+        className={`mt-2 space-y-1.5 pl-5 text-xs leading-relaxed text-secondary ${ordered ? 'list-decimal' : 'list-disc'}`}
       >
         {children}
       </List>
@@ -116,10 +116,10 @@ export function ExportDialog({ open, onClose, exported }) {
           <header className="relative flex flex-col gap-4 px-6 pt-6 pb-4">
             <div className="flex items-start gap-3">
               <div className="mr-auto">
-                <h2 id="export-title" className="text-base font-semibold text-ink">
+                <h2 id="export-title" className="text-base font-semibold text-primary">
                   複製背景
                 </h2>
-                <p className="mt-1 text-xs text-ink-muted">
+                <p className="mt-1 text-xs text-secondary">
                   {exported.snapshot.patternName} · <span className="font-mono">{exported.snapshot.componentName}</span> ·
                   variant <span className="font-mono">{exported.snapshot.variant}</span>
                 </p>

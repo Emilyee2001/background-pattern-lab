@@ -6,6 +6,8 @@
 
 ## 指令
 
+需要 Node.js 20.19+ 或 22.13+（Vite 8 與 ESLint 10 的最低版本）。
+
 ```sh
 npm install
 npm run dev      # 開發

@@ -27,10 +27,10 @@ export function CodeBlock({ id, title, description, code, grow = false }) {
     <section aria-labelledby={`${id}-title`} className={`flex min-w-0 flex-col gap-2 ${grow ? 'min-h-0 flex-1' : ''}`}>
       <div className="flex items-end justify-between gap-3">
         <div className="min-w-0">
-          <h3 id={`${id}-title`} className="text-sm font-semibold text-ink">
+          <h3 id={`${id}-title`} className="text-sm font-semibold text-primary">
             {title}
           </h3>
-          {description && <p className="mt-0.5 text-xs text-ink-subtle">{description}</p>}
+          {description && <p className="mt-0.5 text-xs text-tertiary">{description}</p>}
         </div>
         <Button
           size="sm"
@@ -46,7 +46,7 @@ export function CodeBlock({ id, title, description, code, grow = false }) {
       <pre
         tabIndex={0}
         aria-labelledby={`${id}-title`}
-        className={`${grow ? 'h-0 min-h-40 flex-1' : 'max-h-64'} overflow-auto rounded-field bg-code p-4 font-mono text-[12.5px] leading-relaxed text-slate-100 ring-1 ring-white/10 focus-visible:outline-2 focus-visible:outline-accent`}
+        className={`${grow ? 'h-0 min-h-40 flex-1' : 'max-h-64'} overflow-auto rounded-field bg-code-background p-4 font-mono text-[12.5px] leading-relaxed text-code-foreground ring-1 ring-white/10 focus-visible:outline-2 focus-visible:outline-accent`}
       >
         <code>{code}</code>
       </pre>
