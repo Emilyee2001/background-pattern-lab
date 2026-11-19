@@ -2,7 +2,9 @@
 
 給 UI／前端開發用的 pattern 背景收集與試畫工具：選圖案、調參數與底色、即時預覽，再複製可在其他 React 專案獨立使用的 JSX component 與 CSS，或複製一整段「給 AI 的 prompt」，貼給 AI 工具直接加進專案。
 
-技術：Vite + React + JavaScript + Tailwind CSS v4.3.3（`@tailwindcss/vite`，UI token 在 `src/styles/app.css` 的 `@theme`）。
+線上試用：https://emilyee2001.github.io/background-pattern-lab/
+
+技術：Vite + React + JavaScript + Tailwind CSS v4.3.3（`@tailwindcss/vite`，UI token 在 `src/styles/app.css` 的 `@theme`）；顏色選擇器使用 [react-colorful](https://github.com/omgovich/react-colorful)（僅用於工具介面，匯出的 code 不依賴）。
 
 ## 指令
 
