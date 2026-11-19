@@ -3,7 +3,7 @@ import { buildExportSnapshot } from '../export/build-export.js';
 import { buildBaseDefaultTokenCss, buildPatternDefaultTokenCss, buildTokenCss } from '../export/token-css.js';
 import { BackgroundPreview } from './BackgroundPreview.jsx';
 
-// 展示區：本身就是「使用端容器」（定位 + isolate），棋盤格畫在外層的捲動容器上（見 App）。
+// 展示區：本身就是「使用端容器」（定位 + isolate），底色透明時透出外層捲動容器的單色底（見 App）。
 // 放在捲動內容裡、鋪滿整個內容高度，背景才會和使用端一樣跟著捲動（或依設定固定）。
 // Token 以匯出相同的 Token CSS 注入，RWD 斷點直接依視窗寬度生效。
 export function Stage({ applied }) {

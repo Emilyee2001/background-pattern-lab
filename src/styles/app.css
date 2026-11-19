@@ -30,9 +30,8 @@
   --color-button-secondary-background: rgb(255 255 255 / 0.7);
   --color-code-background: color-mix(in srgb, var(--color-primary) 88%, transparent);
   --color-code-foreground: #F1F5F9;
-  /* 展示區後方的棋盤格 */
-  --color-checker-primary: #FFFFFF;
-  --color-checker-secondary: #E2E4E9;
+  /* 展示區的底：底色透明或半透明時透出的顏色 */
+  --color-stage-background: #F1F5F9;
 
   --radius-panel: 2rem;
   --radius-card: 1rem;
@@ -52,18 +51,6 @@
     0 0 0 1px color-mix(in srgb, var(--color-primary) 6%, transparent),
     0 24px 64px -16px color-mix(in srgb, var(--color-primary) 40%, transparent);
   --shadow-button-primary: 0 8px 20px -8px color-mix(in srgb, var(--color-primary) 60%, transparent);
-}
-
-/* 展示容器後方的棋盤格，讓透明效果可辨識 */
-@utility bg-checker {
-  background-color: var(--color-checker-primary);
-  background-image: conic-gradient(
-    var(--color-checker-secondary) 25%,
-    transparent 0 50%,
-    var(--color-checker-secondary) 0 75%,
-    transparent 0
-  );
-  background-size: 16px 16px;
 }
 
 @layer base {
